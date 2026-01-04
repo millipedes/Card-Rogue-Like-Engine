@@ -14,7 +14,7 @@ const char * parse_target(const char * input, Target * target) {
   } else return NULL;
 }
 
-const char * parse_attack(const char * input, CardValue * value) {
+const char * parse_attack(const char * input, CardAction * action) {
   const char * result = NULL;
   if (!(result = parse_keyword(parse_ws(input), KW_DEAL))) {
     return NULL;
@@ -38,7 +38,7 @@ const char * parse_attack(const char * input, CardValue * value) {
     return NULL;
   }
 
-  *value = (CardValue){
+  *action = (CardAction){
     .effect = (Effect){
       .value = (EffectValue){
         .attack = (Attack){ .magnitude = magnitude },
@@ -104,7 +104,7 @@ const char * parse_duration(const char * input, Duration * duration) {
   return result;
 }
 
-const char * parse_self_buff(const char * input, CardValue * value) {
+const char * parse_self_buff(const char * input, CardAction * action) {
   const char * result = NULL;
   if (!(result = parse_keyword(parse_ws(input), KW_GAIN))) {
     return NULL;
@@ -129,7 +129,7 @@ const char * parse_self_buff(const char * input, CardValue * value) {
     return NULL;
   }
 
-  *value = (CardValue){
+  *action = (CardAction){
     .effect = (Effect){
       .value = (EffectValue){
         .self_buff = (SelfBuff){
@@ -156,7 +156,7 @@ const char * parse_enemy_debuff_type(const char * input, EnemyDebuffType * type)
   } else return NULL;
 }
 
-const char * parse_enemy_debuff(const char * input, CardValue * value) {
+const char * parse_enemy_debuff(const char * input, CardAction * action) {
   const char * result = NULL;
   if (!(result = parse_keyword(parse_ws(input), KW_APPLY))) {
     return NULL;
@@ -190,7 +190,7 @@ const char * parse_enemy_debuff(const char * input, CardValue * value) {
     return NULL;
   }
 
-  *value = (CardValue){
+  *action = (CardAction){
     .effect = (Effect){
       .value = (EffectValue){
         .enemy_debuff = (EnemyDebuff){
@@ -206,45 +206,45 @@ const char * parse_enemy_debuff(const char * input, CardValue * value) {
   return result;
 }
 
-const char * parse_card_value(const char * input, CardValue * value) {
+const char * parse_card_value(const char * input, CardAction * action) {
   const char * result = NULL;
-  if (result = parse_attack(parse_ws(input), value)) {
+  if (result = parse_attack(parse_ws(input), action)) {
     return result;
-  } else if (result = parse_self_buff(parse_ws(input), value)) {
+  } else if (result = parse_self_buff(parse_ws(input), action)) {
     return result;
-  } else if (result = parse_enemy_debuff(parse_ws(input), value)) {
+  } else if (result = parse_enemy_debuff(parse_ws(input), action)) {
     return result;
   } else return NULL;
 }
 
-void add_card_value(Action * action, CardValue value) {
-  if (!action->values) {
-    action->qty_values = 1;
-    action->values = calloc(1, sizeof(CardValue));
+void add_card_action(Card * card, CardAction action) {
+  if (!card->actions) {
+    card->qty_actions = 1;
+    card->actions = calloc(1, sizeof(CardAction));
   } else {
-    action->qty_values++;
-    action->values = realloc(action->values,
-        action->qty_values * sizeof(CardValue));
+    card->qty_actions++;
+    card->actions = realloc(card->actions,
+        card->qty_actions * sizeof(CardAction));
   }
-  action->values[action->qty_values - 1] = value;
+  card->actions[card->qty_actions - 1] = action;
 }
 
-const char * parse_card_actions(const char * input, Action * action) {
+const char * parse_card_actions(const char * input, Card * card) {
   const char * current_input = input;
   const char * final_input = NULL;
 
-  CardValue tmp = {0};
+  CardAction tmp = {0};
   while (current_input = parse_card_value(parse_ws(current_input), &tmp)) {
     final_input = current_input;
-    add_card_value(action, tmp);
-    tmp = (CardValue){0};
+    add_card_action(card, tmp);
+    tmp = (CardAction){0};
   }
   return parse_ws(final_input);
 }
 
-void free_action(Action action) {
-  if (action.values) {
-    free(action.values);
+void free_card(Card card) {
+  if (card.actions) {
+    free(card.actions);
   }
 }
 

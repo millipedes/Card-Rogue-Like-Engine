@@ -91,21 +91,21 @@ typedef enum {
 typedef struct {
   Effect effect;
   Target target;
-} CardValue;
+} CardAction;
 
 typedef struct {
-  CardValue * values;
-  uint8_t qty_values;
-} Action;
+  CardAction * actions;
+  uint8_t qty_actions;
+} Card;
 
 // Public API
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-const char * parse_card_actions(const char * input, Action * action);
+const char * parse_card_actions(const char * input, Card * card);
 
-void free_action(Action action);
+void free_card(Card card);
 
 #ifdef __cplusplus
 }
