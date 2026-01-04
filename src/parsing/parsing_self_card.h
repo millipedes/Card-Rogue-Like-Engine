@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#include "core/game_state.h"
+#include "parsing.h"
 
 #define KW_TARGET  "Target"
 #define KW_ENEMY   "Enemy"

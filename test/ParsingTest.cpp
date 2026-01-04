@@ -2,10 +2,8 @@
 
 #include <iostream>
 
+#include "parsing/parsing.h"
 #include "parsing/parsing_self_card.h"
-
-// Don't want these functions to be in the public API
-extern "C" const char * parse_number(const char * input, double * d);
 
 constexpr auto eps = 1e-6;
 
