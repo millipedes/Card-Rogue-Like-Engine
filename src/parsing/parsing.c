@@ -1,7 +1,6 @@
 #include "parsing.h"
 
 #include <ctype.h>
-#include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -79,6 +78,7 @@ const char * parse_keywords(const char * input, uint8_t qty, ...) {
   for (uint8_t i = 0; i < qty; i++) {
     if (!(result = parse_keyword(i == 0 ? parse_ws(input) : parse_ws(result),
             va_arg(args, const char *)))) {
+      va_end(args);
       return NULL;
     }
   }

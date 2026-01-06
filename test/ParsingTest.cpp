@@ -287,9 +287,11 @@ TEST(enemy_debuff, enemy_debuff_1) {
   ASSERT_EQ(action.target, TARGET_ENEMY);
 }
 
-TEST(card, card_0) {
+extern "C" const char * parse_card_actions(const char * input, Card * card);
+
+TEST(card_action, card_action_0) {
   Card card = {0};
-  const char * input = R"(
+  auto input = R"(
 # This is a really broken card :)
 Deal 9.1 Base Damage to Target Enemy.
 Deal 6.7 Base Damage to All Enemies.
@@ -356,4 +358,150 @@ Apply 1.00 Corrode to Target Enemy for 1e1 Turns.
   ASSERT_EQ(card.actions[7].target, TARGET_ENEMY);
 
   free_card(card);
+}
+
+extern "C" const char * parse_name(const char * input, Card * card);
+
+TEST(card_name, card_name_0) {
+  // name inputs will be expected to be of this form without the opening
+  // verticle bar. A little hacky, but imo the alternative is more hacky.
+  auto input = R"(Scratch                             |)";
+  Card card = {0};
+
+  auto result = parse_name(input, &card);
+  ASSERT_EQ(result[0], '|');
+  ASSERT_STREQ(card.name, "Scratch");
+
+  free_card(card);
+}
+
+TEST(card_name, card_name_1) {
+  auto input = R"(Bad Luck Kitty                                 |)";
+  Card card = {0};
+
+  auto result = parse_name(input, &card);
+  ASSERT_EQ(result[0], '|');
+  ASSERT_STREQ(card.name, "Bad Luck Kitty");
+
+  free_card(card);
+}
+
+TEST(card_name, card_name_2) {
+  auto input = R"(Bad Luck Kitty                                 
+|)";
+  Card card = {0};
+
+  auto result = parse_name(input, &card);
+  ASSERT_EQ(result[0], '|');
+  ASSERT_STREQ(card.name, "Bad Luck Kitty");
+
+  free_card(card);
+}
+
+extern "C" const char * parse_card(const char * input, Card * card);
+
+TEST(card, card_0) {
+  auto input = R"(
+# This is a cool card :)
+Name:   | Bite   |
+Cost:   | 2      |
+Rarity: | Common |
+Action: |
+Deal 4 Base Damage to Target Enemy.
+Apply 0.35 Stumble to Target Enemy.
+|)";
+
+  Card card = {0};
+  auto result = parse_card(input, &card);
+
+  ASSERT_STREQ(card.name, "Bite");
+  ASSERT_NEAR(card.cost, 2, eps);
+  ASSERT_EQ(card.rarity, COMMON);
+
+  ASSERT_NEAR(card.actions[0].effect.value.attack.magnitude, 4, eps);
+  ASSERT_EQ(card.actions[0].effect.type, ATTACK);
+  ASSERT_EQ(card.actions[0].target, TARGET_ENEMY);
+
+  ASSERT_NEAR(card.actions[1].effect.value.enemy_debuff.magnitude, 3.5e-1, eps);
+  ASSERT_EQ(card.actions[1].effect.value.enemy_debuff.duration.type, INDEFINITE);
+  ASSERT_EQ(card.actions[1].effect.value.enemy_debuff.duration.value.indefinite, true);
+  ASSERT_EQ(card.actions[1].effect.value.enemy_debuff.type, STUMBLE);
+  ASSERT_EQ(card.actions[1].effect.type, ENEMY_DEBUFF);
+  ASSERT_EQ(card.actions[1].target, TARGET_ENEMY);
+
+  ASSERT_EQ(card.qty_actions, 2);
+
+  ASSERT_EQ(result[0], '\0');
+
+  free_card(card);
+}
+
+// Given the above tests, I think that successfully parsing my first example
+// input file and having the correct number of cards in the card pool is a
+// sufficient final test.
+TEST(self_card_set, self_card_set_0) {
+  auto input = R"(Name:   | Scratch                             |
+Cost:   | 1                                   |
+Rarity: | Common                              |
+Action: | Deal 3 Base Damage to Target Enemy. |
+
+Name:   | Hidey Hole                 |
+Cost:   | 1                          |
+Rarity: | Common                     |
+Action: | Gain 2 Defense for 1 Turn. |
+
+Name:   | Bite   |
+Cost:   | 2      |
+Rarity: | Common |
+Action: |
+Deal 4 Base Damage to Target Enemy.
+Apply 0.35 Stumble to Target Enemy.
+|
+
+Name:   | Bad Luck Kitty                                 |
+Cost:   | 1                                              |
+Rarity: | Common                                         |
+Action: | Apply 0.65 Corrode to All Enemies for 2 Turns. |
+
+Name:   | Zoomies        |
+Cost:   | 1              |
+Rarity: | UnCommon       |
+Action: | Gain 1 Damage. |
+
+Name:   | Sharp Claws                          |
+Cost:   | 1                                    |
+Rarity: | UnCommon                             |
+Action: | Deal 15 Base Damage to Target Enemy. |
+
+Name:   | Murder Mittens |
+Cost:   | 2              |
+Rarity: | UnCommon       |
+Action: | Deal 20 Base Damage to Target Enemy. |
+
+# Name:   | Laser Pointer Fury |
+# Cost:   | 2                  |
+# Rarity: | |
+# Action: | |
+
+# Name:   | All Paws on Deck |
+# Cost:   | 1                |
+# Rarity: | UnCommon         |
+# Action: | Draw 3 Cards.    |
+
+Name:   | Cat Nap                     |
+Cost:   | 2                           |
+Rarity: | Rare                        |
+Action: | Gain 4 Defense for 3 Turns. |
+
+Name:   | Cataclysm                            |
+Cost:   | 3                                    |
+Rarity: | Rare                                 |
+Action: | Deal 40 Base Damage to Target Enemy. |
+)";
+
+  CardPool card_pool = {0};
+  auto result = parse_self_cards(input, &card_pool);
+  ASSERT_EQ(card_pool.qty_cards, 9);
+  free_card_pool(card_pool);
+  ASSERT_EQ(result[0], '\0');
 }
