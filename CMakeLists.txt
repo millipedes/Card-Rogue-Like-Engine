@@ -5,8 +5,9 @@ project(CardRL)
 # Core Library #
 ################
 set(SRC_DIR ${CMAKE_SOURCE_DIR}/src)
-set(SRC_FILES
+set(LIB_SRC_FILES
   ${SRC_DIR}/core/game_state.c
+  ${SRC_DIR}/core/self.c
   ${SRC_DIR}/parsing/parsing.c
   ${SRC_DIR}/parsing/parsing_self_card.c
 )
@@ -17,18 +18,19 @@ include_directories(
 
 find_package(Curses REQUIRED)
 
-add_library(CardRLCore ${SRC_FILES})
+add_library(CardRLCore ${LIB_SRC_FILES})
 
-target_link_libraries(CardRLCore
-  PRIVATE
-  curses
+set(EXE_SRC_FILES
+  ${SRC_DIR}/grahpics/battle_scene.c
+  ${SRC_DIR}/grahpics/core_graphics.c
 )
 
-add_executable(card_rl ${SRC_DIR}/main.c)
+add_executable(card_rl ${EXE_SRC_FILES} ${SRC_DIR}/main.c)
 
 target_link_libraries(card_rl
   PRIVATE
   CardRLCore
+  curses
 )
 
 option(BUILD_TESTS "Build Test Suite" ON)

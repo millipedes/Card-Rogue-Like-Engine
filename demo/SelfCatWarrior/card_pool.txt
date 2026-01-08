@@ -1,0 +1,51 @@
+Name:   | Scratch                             |
+Cost:   | 1                                   |
+Rarity: | Common                              |
+Action: | Deal 3 Base Damage to Target Enemy. |
+
+Name:   | Hidey Hole                 |
+Cost:   | 1                          |
+Rarity: | Common                     |
+Action: | Gain 2 Defense for 1 Turn. |
+
+Name:   | Bite   |
+Cost:   | 2      |
+Rarity: | Common |
+Action:
+|
+Deal 4 Base Damage to Target Enemy.
+Apply 0.35 Stumble to Target Enemy.
+|
+
+Name:   | Bad Luck Kitty                                 |
+Cost:   | 1                                              |
+Rarity: | Common                                         |
+Action: | Apply 0.65 Corrode to All Enemies for 2 Turns. |
+
+Name:   | Zoomies        |
+Cost:   | 1              |
+Rarity: | UnCommon       |
+Action: | Gain 1 Damage. |
+
+Name:   | Sharp Claws                          |
+Cost:   | 1                                    |
+Rarity: | UnCommon                             |
+Action: | Deal 15 Base Damage to Target Enemy. |
+
+Name:   | Cat Nap                     |
+Cost:   | 2                           |
+Rarity: | Rare                        |
+Action: | Gain 4 Defense for 3 Turns. |
+
+Name:   | Cataclysm                            |
+Cost:   | 3                                    |
+Rarity: | Summ                                 |
+Action: | Deal 40 Base Damage to Target Enemy. |
+
+# Ideas to be implemented
+# Name:   | Murder Mittens |
+# Name:   | Laser Pointer Fury |
+# Name:   | All Paws on Deck |
+# Cost:   | 1                |
+# Rarity: | UnCommon         |
+# Action: | Draw 3 Cards.    |

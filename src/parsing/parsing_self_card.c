@@ -300,7 +300,33 @@ void add_card(CardPool * card_pool, Card card) {
   card_pool->cards[card_pool->qty_cards - 1] = card;
 }
 
-const char * parse_self_cards(const char * input, CardPool * card_pool) {
+bool find_card(const CardPool * card_pool, const char * name,
+    uint8_t * index_on_success) {
+  for (uint8_t i = 0; i < card_pool->qty_cards; i++) {
+    if (!strncmp(name, card_pool->cards[i].name, MAX_CARD_NAME_LEN)) {
+      *index_on_success = i;
+      return true;
+    }
+  }
+  return false;
+}
+
+Card deep_copy_card(const Card old) {
+  Card copy = {0};
+  size_t name_len = strnlen(old.name, MAX_CARD_NAME_LEN);
+  copy.name = calloc(name_len + 1, sizeof(char));
+  strncpy(copy.name, old.name, name_len);
+  copy.cost = old.cost;
+  copy.rarity = old.rarity;
+  copy.qty_actions = old.qty_actions;
+  copy.actions = calloc(copy.qty_actions, sizeof(CardAction));
+  for (uint8_t i = 0; i < copy.qty_actions; i++) {
+    copy.actions[i] = old.actions[i];
+  }
+  return copy;
+}
+
+const char * parse_self_card_pool(const char * input, CardPool * card_pool) {
   const char * current_input = input;
   const char * final_input = NULL;
 
@@ -311,6 +337,48 @@ const char * parse_self_cards(const char * input, CardPool * card_pool) {
     tmp = (Card){0};
   }
   return parse_ws(final_input);
+}
+
+const char * parse_self_starting_deck(const char * input,
+    const CardPool * card_pool, Deck * deck) {
+  const char * result = input;
+  const char * tmp_result = NULL;
+
+  while (true) {
+    tmp_result = strchr(result, CHAR_COLON);
+    if (!tmp_result) {
+      break;
+    }
+
+    size_t name_len = tmp_result - result;
+    char * name = calloc(name_len + 1, sizeof(char));
+    strncpy(name, result, name_len);
+    // We know it must exist as strchr did not return NULL, after the name stuff
+    // as we do not want the name to have the ":"
+    tmp_result = parse_keyword(parse_ws(tmp_result), KW_COLON);
+
+    uint8_t card_pool_index = 0;
+    if (!find_card(card_pool, name, &card_pool_index)) {
+      free(name);
+      return NULL;
+    }
+
+    double tmp = 0.0;
+    if (!(tmp_result = parse_number(parse_ws(tmp_result), &tmp))) {
+      free(name);
+      return NULL;
+    }
+
+    for (int i = 0; i < (int)tmp; i++) {
+      add_card(deck, deep_copy_card(card_pool->cards[card_pool_index]));
+    }
+
+    free(name);
+
+    result = parse_ws(tmp_result);
+  }
+
+  return result;
 }
 
 void free_card(Card card) {

@@ -500,8 +500,37 @@ Action: | Deal 40 Base Damage to Target Enemy. |
 )";
 
   CardPool card_pool = {0};
-  auto result = parse_self_cards(input, &card_pool);
+  auto result = parse_self_card_pool(input, &card_pool);
   ASSERT_EQ(card_pool.qty_cards, 9);
   free_card_pool(card_pool);
   ASSERT_EQ(result[0], '\0');
+}
+
+TEST(starting_deck, starting_deck_0) {
+  auto input_card_pool = R"(Name:   | Scratch                             |
+Cost:   | 1                                   |
+Rarity: | Common                              |
+Action: | Deal 3 Base Damage to Target Enemy. |
+
+Name:   | Hidey Hole                 |
+Cost:   | 1                          |
+Rarity: | Common                     |
+Action: | Gain 2 Defense for 1 Turn. |)";
+
+  CardPool card_pool = {0};
+  auto result_card_pool = parse_self_card_pool(input_card_pool, &card_pool);
+  ASSERT_EQ(card_pool.qty_cards, 2);
+  ASSERT_EQ(result_card_pool[0], '\0');
+
+  auto input_starting_deck = R"(Scratch: 5
+Hidey Hole: 5)";
+
+  Deck starting_deck = {0};
+  auto result_starting_deck = parse_self_starting_deck(input_starting_deck,
+      &card_pool, &starting_deck);
+  ASSERT_EQ(starting_deck.qty_cards, 10);
+  ASSERT_EQ(result_starting_deck[0], '\0');
+
+  free_card_pool(card_pool);
+  free_card_pool(starting_deck);
 }
