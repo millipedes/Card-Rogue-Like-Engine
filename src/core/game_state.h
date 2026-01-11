@@ -4,10 +4,10 @@
 #include <stdint.h>
 
 #include "enemy.h"
-#include "self.h"
+#include "self_state.h"
 
 typedef struct {
-  Self self;
+  SelfState self_state;
   Enemy * enemies;
   uint8_t qty_enemies;
 } GameState;

@@ -7,7 +7,7 @@ project(CardRL)
 set(SRC_DIR ${CMAKE_SOURCE_DIR}/src)
 set(LIB_SRC_FILES
   ${SRC_DIR}/core/game_state.c
-  ${SRC_DIR}/core/self.c
+  ${SRC_DIR}/core/self_state.c
   ${SRC_DIR}/parsing/parsing.c
   ${SRC_DIR}/parsing/parsing_self_card.c
 )
@@ -21,8 +21,9 @@ find_package(Curses REQUIRED)
 add_library(CardRLCore ${LIB_SRC_FILES})
 
 set(EXE_SRC_FILES
-  ${SRC_DIR}/grahpics/battle_scene.c
-  ${SRC_DIR}/grahpics/core_graphics.c
+  ${SRC_DIR}/graphics/battle_view.c
+  ${SRC_DIR}/graphics/core_graphics.c
+  ${SRC_DIR}/graphics/self_view.c
 )
 
 add_executable(card_rl ${EXE_SRC_FILES} ${SRC_DIR}/main.c)
