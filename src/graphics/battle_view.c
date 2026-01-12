@@ -36,21 +36,28 @@ BattleView init_battle_view(SelfStateRef self_state_ref) {
   return view;
 }
 
-void update_battle_view(BattleView view) {
-  werase(view.enemy_space);
-  box(view.enemy_space, 0, 0);
-  wrefresh(view.enemy_space);
+BattleView update_battle_view(BattleView view, BattleMessage message) {
+  switch (message) {
+    case MSG_STANDBY:
+    case MSG_HAND_SELECT_DOWN:
+    default:
+      werase(view.enemy_space);
+      box(view.enemy_space, 0, 0);
+      wrefresh(view.enemy_space);
 
-  werase(view.self_space);
-  box(view.self_space, 0, 0);
-  update_self_view(view.self_view);
-  wrefresh(view.self_space);
+      werase(view.self_space);
+      box(view.self_space, 0, 0);
+      view.self_view = update_self_view(view.self_view, message);
+      wrefresh(view.self_space);
 
-  werase(view.info_space);
-  box(view.info_space, 0, 0);
-  wrefresh(view.info_space);
+      werase(view.info_space);
+      box(view.info_space, 0, 0);
+      wrefresh(view.info_space);
+      break;
+  }
 
   doupdate();
+  return view;
 }
 
 void free_battle_view(BattleView view) {

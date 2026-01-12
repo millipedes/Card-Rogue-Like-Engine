@@ -3,6 +3,7 @@
 
 #include <ncurses.h>
 
+#include "messages.h"
 #include "self_view.h"
 
 typedef struct {
@@ -13,7 +14,7 @@ typedef struct {
 } BattleView;
 
 BattleView init_battle_view(SelfStateRef self_state_ref);
-void update_battle_view(BattleView view);
+BattleView update_battle_view(BattleView view, BattleMessage message);
 void free_battle_view(BattleView view);
 
 #endif
