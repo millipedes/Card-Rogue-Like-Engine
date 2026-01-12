@@ -77,6 +77,8 @@ typedef enum {
   CORRODE,
 } EnemyDebuffType;
 
+const char * enemy_debuff_type_to_string(EnemyDebuffType type);
+
 typedef struct {
   Duration duration;
   double magnitude;
@@ -110,11 +112,6 @@ typedef union {
   Attack attack;
 } EffectValue;
 
-typedef struct {
-  EffectValue value;
-  EffectType type;
-} Effect;
-
 typedef enum {
   SELF,
   TARGET_ENEMY,
@@ -122,7 +119,8 @@ typedef enum {
 } Target;
 
 typedef struct {
-  Effect effect;
+  EffectValue value;
+  EffectType type;
   Target target;
 } CardAction;
 
@@ -132,6 +130,8 @@ typedef enum {
   RARE,
   SUMM,
 } Rarity;
+
+const char * rarity_to_string(Rarity rarity);
 
 typedef struct {
   char * name;

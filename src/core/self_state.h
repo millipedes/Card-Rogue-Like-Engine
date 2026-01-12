@@ -3,7 +3,7 @@
 
 #include <stddef.h>
 
-#include "parsing/parsing_self_card.h"
+#include "config_io/parsing_self_state.h"
 
 #define MAX_PATH_LEN 256
 #define MAX_FILE_LEN (1024 * 1024)

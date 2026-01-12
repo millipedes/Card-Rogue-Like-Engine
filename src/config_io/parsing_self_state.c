@@ -1,8 +1,26 @@
-#include "parsing_self_card.h"
+#include "parsing_self_state.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+const char * enemy_debuff_type_to_string(EnemyDebuffType type) {
+  switch (type) {
+    case STUMBLE: return "Stumble";
+    case CORRODE: return "Corrode";
+  }
+  return NULL;
+}
+
+const char * rarity_to_string(Rarity rarity) {
+  switch (rarity) {
+    case COMMON:   return "Common";
+    case UNCOMMON: return "Uncommon";
+    case RARE:     return "Rare";
+    case SUMM:     return "Summ";
+  }
+  return NULL;
+}
 
 const char * parse_target(const char * input, Target * target) {
   const char * result = NULL;
@@ -28,12 +46,10 @@ const char * parse_attack(const char * input, CardAction * action) {
   }
 
   *action = (CardAction){
-    .effect = (Effect){
-      .value = (EffectValue){
-        .attack = (Attack){ .magnitude = magnitude },
-      },
-      .type = ATTACK,
+    .value = (EffectValue){
+      .attack = (Attack){ .magnitude = magnitude },
     },
+    .type = ATTACK,
     .target = target,
   };
   return result;
@@ -107,16 +123,14 @@ const char * parse_self_buff(const char * input, CardAction * action) {
   }
 
   *action = (CardAction){
-    .effect = (Effect){
-      .value = (EffectValue){
-        .self_buff = (SelfBuff){
-          .duration = duration,
-          .magnitude = magnitude,
-          .type = type,
-        },
+    .value = (EffectValue){
+      .self_buff = (SelfBuff){
+        .duration = duration,
+        .magnitude = magnitude,
+        .type = type,
       },
-      .type = SELF_BUFF,
     },
+    .type = SELF_BUFF,
     .target = SELF,
   };
   return result;
@@ -150,16 +164,14 @@ const char * parse_enemy_debuff(const char * input, CardAction * action) {
   }
 
   *action = (CardAction){
-    .effect = (Effect){
-      .value = (EffectValue){
-        .enemy_debuff = (EnemyDebuff){
-          .duration = duration,
-          .magnitude = magnitude,
-          .type = type,
-        },
+    .value = (EffectValue){
+      .enemy_debuff = (EnemyDebuff){
+        .duration = duration,
+        .magnitude = magnitude,
+        .type = type,
       },
-      .type = ENEMY_DEBUFF,
     },
+    .type = ENEMY_DEBUFF,
     .target = target,
   };
   return result;
