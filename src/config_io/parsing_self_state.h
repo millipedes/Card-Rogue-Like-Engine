@@ -42,6 +42,9 @@
 #define CHAR_COLON    ':'
 #define CHAR_VERT_BAR '|'
 
+// Misc.
+#define KW_SPACE " "
+
 // Bitmap is as follows:
 // (Action) (Rarity) (Cost) (Name)
 // I.e.
@@ -90,6 +93,8 @@ typedef enum {
   DEFENSE,
 } SelfBuffType;
 
+const char * self_buff_type_to_string(SelfBuffType type);
+
 typedef struct {
   Duration duration;
   double magnitude;
@@ -117,6 +122,8 @@ typedef enum {
   TARGET_ENEMY,
   ALL_ENEMIES,
 } Target;
+
+const char * target_to_string(Target target);
 
 typedef struct {
   EffectValue value;

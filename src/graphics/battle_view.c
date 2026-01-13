@@ -10,15 +10,15 @@ BattleView init_battle_view(SelfStateRef self_state_ref) {
 
   view.enemy_space = newwin(
       screen_h * 70 / 100, // y len
-      screen_w * 67 / 100, // x len
+      screen_w * 55 / 100, // x len
       0,                   // y start
-      screen_w * 33 / 100  // x start
+      screen_w * 45 / 100  // x start
   );
   box(view.enemy_space, 0, 0);
 
   view.self_space = newwin(
       screen_h * 70 / 100,
-      screen_w * 33 / 100,
+      screen_w * 45 / 100,
       0,
       0
   );

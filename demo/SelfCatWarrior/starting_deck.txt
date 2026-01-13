@@ -1,2 +1,4 @@
-Scratch: 7
-Hidey Hole: 7
+Scratch: 6
+Hidey Hole: 6
+Bite: 1
+Bad Luck Kitty: 1

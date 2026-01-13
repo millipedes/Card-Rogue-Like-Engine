@@ -4,6 +4,7 @@
 
 #include "config_io/parsing.h"
 #include "config_io/parsing_self_state.h"
+#include "config_io/stream_self_card.h"
 
 constexpr auto eps = 1e-6;
 
@@ -533,4 +534,178 @@ Hidey Hole: 5)";
 
   free_card_pool(card_pool);
   free_card_pool(starting_deck);
+}
+
+extern "C" char * cat_enemy_debuff_to_stream(char * to, CardAction a);
+
+TEST(to_stream, enemy_debuff_to_stream_0) {
+  auto input_card_pool = R"(Name:   | Bad Luck Kitty                                 |
+Cost:   | 1                                              |
+Rarity: | Common                                         |
+Action: | Apply 0.65 Corrode to All Enemies for 2 Turns. |)";
+
+  CardPool card_pool = {0};
+  parse_self_card_pool(input_card_pool, &card_pool);
+
+  char tmp[MAX_CARD_TEXT] = {0};
+
+  cat_enemy_debuff_to_stream(tmp, card_pool.cards[0].actions[0]);
+
+  ASSERT_STREQ(tmp, "Apply 0.65 Corrode to All Enemies for 2 Turns.");
+
+  free_card_pool(card_pool);
+}
+
+TEST(to_stream, enemy_debuff_to_stream_1) {
+  auto input_card_pool = R"(Name:   | Bad Luck Kitty                                 |
+Cost:   | 1                                              |
+Rarity: | Common                                         |
+Action: | Apply 0.651 Stumble to All Enemies for 1 Turn. |)";
+
+  CardPool card_pool = {0};
+  parse_self_card_pool(input_card_pool, &card_pool);
+
+  char tmp[MAX_CARD_TEXT] = {0};
+
+  cat_enemy_debuff_to_stream(tmp, card_pool.cards[0].actions[0]);
+
+  ASSERT_STREQ(tmp, "Apply 0.65 Stumble to All Enemies for 1 Turn.");
+
+  free_card_pool(card_pool);
+}
+
+TEST(to_stream, enemy_debuff_to_stream_2) {
+  auto input_card_pool = R"(Name:   | Bad Luck Kitty                                 |
+Cost:   | 1                                              |
+Rarity: | Common                                         |
+Action: | Apply 6.5e-1 Corrode to All Enemies. |)";
+
+  CardPool card_pool = {0};
+  parse_self_card_pool(input_card_pool, &card_pool);
+
+  char tmp[MAX_CARD_TEXT] = {0};
+
+  cat_enemy_debuff_to_stream(tmp, card_pool.cards[0].actions[0]);
+
+  ASSERT_STREQ(tmp, "Apply 0.65 Corrode to All Enemies.");
+
+  free_card_pool(card_pool);
+}
+
+extern "C" char * cat_self_buff_to_stream(char * to, CardAction a);
+
+TEST(to_stream, self_buff_0) {
+  auto input_card_pool = R"(Name:   | Zoomies        |
+Cost:   | 1              |
+Rarity: | UnCommon       |
+Action: | Gain 1 Damage. |)";
+
+  CardPool card_pool = {0};
+  parse_self_card_pool(input_card_pool, &card_pool);
+
+  char tmp[MAX_CARD_TEXT] = {0};
+
+  cat_self_buff_to_stream(tmp, card_pool.cards[0].actions[0]);
+
+  ASSERT_STREQ(tmp, "Gain 1.00 Damage.");
+
+  free_card_pool(card_pool);
+}
+
+TEST(to_stream, self_buff_1) {
+  auto input_card_pool = R"(Name:   | Zoomies        |
+Cost:   | 1              |
+Rarity: | UnCommon       |
+Action: | Gain 1.00000 Damage for 1 Turn. |)";
+
+  CardPool card_pool = {0};
+  parse_self_card_pool(input_card_pool, &card_pool);
+
+  char tmp[MAX_CARD_TEXT] = {0};
+
+  cat_self_buff_to_stream(tmp, card_pool.cards[0].actions[0]);
+
+  ASSERT_STREQ(tmp, "Gain 1.00 Damage for 1 Turn.");
+
+  free_card_pool(card_pool);
+}
+
+TEST(to_stream, self_buff_2) {
+  auto input_card_pool = R"(Name:   | Zoomies        |
+Cost:   | 1              |
+Rarity: | UnCommon       |
+Action: | Gain 1e0 Damage for 2 Turns. |)";
+
+  CardPool card_pool = {0};
+  parse_self_card_pool(input_card_pool, &card_pool);
+
+  char tmp[MAX_CARD_TEXT] = {0};
+
+  cat_self_buff_to_stream(tmp, card_pool.cards[0].actions[0]);
+
+  ASSERT_STREQ(tmp, "Gain 1.00 Damage for 2 Turns.");
+
+  free_card_pool(card_pool);
+}
+
+extern "C" char * cat_attack_to_stream(char * to, CardAction a);
+
+TEST(to_stream, attack_0) {
+  auto input_card_pool = R"(Name:   | Cataclysm                            |
+Cost:   | 3                                    |
+Rarity: | Summ                                 |
+Action: | Deal 40 Base Damage to Target Enemy. |)";
+
+  CardPool card_pool = {0};
+  parse_self_card_pool(input_card_pool, &card_pool);
+
+  char tmp[MAX_CARD_TEXT] = {0};
+
+  cat_attack_to_stream(tmp, card_pool.cards[0].actions[0]);
+
+  ASSERT_STREQ(tmp, "Deal 40.00 Base Damage to Target Enemy.");
+
+  free_card_pool(card_pool);
+}
+
+TEST(to_stream, attack_1) {
+  auto input_card_pool = R"(Name:   | Cataclysm                            |
+Cost:   | 3                                    |
+Rarity: | Summ                                 |
+Action: | Deal 4E+1 Base Damage to All Enemies. |)";
+
+  CardPool card_pool = {0};
+  parse_self_card_pool(input_card_pool, &card_pool);
+
+  char tmp[MAX_CARD_TEXT] = {0};
+
+  cat_attack_to_stream(tmp, card_pool.cards[0].actions[0]);
+
+  ASSERT_STREQ(tmp, "Deal 40.00 Base Damage to All Enemies.");
+
+  free_card_pool(card_pool);
+}
+
+TEST(to_stream, general_0) {
+  auto input_card_pool = R"(Name:   | All Out Cattack                      |
+Cost:   | 3                                    |
+Rarity: | Summ                                 |
+Action: |
+Deal 4E+1 Base Damage to All Enemies.Gain 1e0 Damage for 2 Turns.
+Apply 6.5e-1 Corrode to All Enemies.
+|)";
+
+  CardPool card_pool = {0};
+  parse_self_card_pool(input_card_pool, &card_pool);
+
+  auto card_streams = card_to_stream(card_pool.cards[0]);
+
+  ASSERT_STREQ(card_streams.name, "All Out Cattack");
+  ASSERT_STREQ(card_streams.cost, "3.00");
+  ASSERT_STREQ(card_streams.rarity, "Summ");
+  ASSERT_STREQ(card_streams.action_texts[0], "Deal 40.00 Base Damage to All Enemies.");
+  ASSERT_STREQ(card_streams.action_texts[1], "Gain 1.00 Damage for 2 Turns.");
+  ASSERT_STREQ(card_streams.action_texts[2], "Apply 0.65 Corrode to All Enemies.");
+
+  free_card_pool(card_pool);
 }

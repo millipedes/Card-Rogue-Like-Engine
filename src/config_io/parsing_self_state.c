@@ -12,6 +12,23 @@ const char * enemy_debuff_type_to_string(EnemyDebuffType type) {
   return NULL;
 }
 
+const char * self_buff_type_to_string(SelfBuffType type) {
+  switch (type) {
+    case DAMAGE:  return "Damage";
+    case DEFENSE: return "Defense";
+  }
+  return NULL;
+}
+
+const char * target_to_string(Target target) {
+  switch (target) {
+    case SELF:         return "Self";
+    case TARGET_ENEMY: return "Target Enemy";
+    case ALL_ENEMIES:  return "All Enemies";
+  }
+  return NULL;
+}
+
 const char * rarity_to_string(Rarity rarity) {
   switch (rarity) {
     case COMMON:   return "Common";
