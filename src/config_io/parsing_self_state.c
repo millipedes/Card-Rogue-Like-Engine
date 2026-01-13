@@ -89,7 +89,7 @@ const char * parse_card(const char * input, Card * card) {
           || !(tmp_result = parse_keyword(parse_ws(tmp_result), KW_VERT_BAR))) {
         return NULL;
       }
-      attribute_bitmap |= (1U << NAME_BIT);
+      attribute_bitmap |= (1U << SELF_CARD_NAME_BIT);
       result = tmp_result;
 
     } else if (tmp_result = parse_keywords(parse_ws(result), 2, KW_COST, KW_COLON)) {
@@ -98,7 +98,7 @@ const char * parse_card(const char * input, Card * card) {
           || !(tmp_result = parse_keyword(parse_ws(tmp_result), KW_VERT_BAR))) {
         return NULL;
       }
-      attribute_bitmap |= (1U << COST_BIT);
+      attribute_bitmap |= (1U << SELF_CARD_COST_BIT);
       result = tmp_result;
 
     } else if (tmp_result = parse_keywords(parse_ws(result), 2, KW_RARITY, KW_COLON)) {
@@ -107,7 +107,7 @@ const char * parse_card(const char * input, Card * card) {
           || !(tmp_result = parse_keyword(parse_ws(tmp_result), KW_VERT_BAR))) {
         return NULL;
       }
-      attribute_bitmap |= (1U << RARITY_BIT);
+      attribute_bitmap |= (1U << SELF_CARD_RARITY_BIT);
       result = tmp_result;
 
     } else if (tmp_result = parse_keywords(parse_ws(result), 2, KW_ACTION, KW_COLON)) {
@@ -116,7 +116,7 @@ const char * parse_card(const char * input, Card * card) {
           || !(tmp_result = parse_keyword(parse_ws(tmp_result), KW_VERT_BAR))) {
         return NULL;
       }
-      attribute_bitmap |= (1U << ACTION_BIT);
+      attribute_bitmap |= (1U << SELF_CARD_ACTION_BIT);
       result = tmp_result;
 
     } else {
@@ -230,10 +230,10 @@ void free_card(Card card) {
 }
 
 void free_card_pool(CardPool card_pool) {
-  for (uint8_t i = 0; i < card_pool.qty_cards; i++) {
-    free_card(card_pool.cards[i]);
-  }
   if (card_pool.cards) {
+    for (uint8_t i = 0; i < card_pool.qty_cards; i++) {
+      free_card(card_pool.cards[i]);
+    }
     free(card_pool.cards);
   }
 }

@@ -3,7 +3,10 @@
 #include <iostream>
 
 #include "config_io/parsing.h"
+#include "config_io/parsing_common_state.h"
 #include "config_io/parsing_self_state.h"
+#include "config_io/parsing_enemy_state.h"
+
 #include "config_io/stream_self_card.h"
 
 constexpr auto eps = 1e-6;
@@ -534,6 +537,31 @@ Hidey Hole: 5)";
 
   free_card_pool(card_pool);
   free_card_pool(starting_deck);
+}
+
+TEST(enemy_move_pool, enemy_move_pool_0) {
+  auto input_move_pool = R"(Action:      | Deal 2 Base Damage to All Enemies. |
+Cardinality: | 1                   |
+Probability: | 100 %               |
+
+Action:      | Apply 0.35 Stumble to All Enemies for 1 Turn. |
+Cardinality: | 2                             |
+Probability: | 50 %                          |
+
+Action:      | Deal 3 Base Damage to All Enemies. |
+Cardinality: | 2                   |
+Probability: | 25 %                |
+
+Action:      | Gain 1 Damage. |
+Cardinality: | 2              |
+Probability: | 25 %           |)";
+
+  MovePool move_pool = {0};
+  auto result = parse_enemy_move_pool(input_move_pool, &move_pool);
+  printf("`%s`\n", result);
+  ASSERT_EQ(result[0], '\0');
+
+  free_move_pool(move_pool);
 }
 
 extern "C" char * cat_enemy_debuff_to_stream(char * to, Action a);

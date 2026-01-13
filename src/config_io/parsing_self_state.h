@@ -30,10 +30,10 @@
 //        0        0      0      0
 // => Seen nothing
 #define SELF_CARD_ATTRIBUTE_BIT_NO 0b1111
-#define ACTION_BIT 3
-#define RARITY_BIT 2
-#define COST_BIT   1
-#define NAME_BIT   0
+#define SELF_CARD_ACTION_BIT 3
+#define SELF_CARD_RARITY_BIT 2
+#define SELF_CARD_COST_BIT   1
+#define SELF_CARD_NAME_BIT   0
 
 #define MAX_CARD_NAME_LEN 128
 
