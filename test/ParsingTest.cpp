@@ -190,10 +190,10 @@ TEST(number, number_41) {
   number_test_helper(.1e2, "+.1e2");
 }
 
-extern "C" const char * parse_attack(const char * input, CardAction * action);
+extern "C" const char * parse_attack(const char * input, Action * action);
 
 TEST(attack, attack_0) {
-  CardAction action = {0};
+  Action action = {0};
   auto result = parse_attack("Deal 3.2 Base Damage to All Enemies.", &action);
   ASSERT_EQ(result[0], '\0');
 
@@ -203,7 +203,7 @@ TEST(attack, attack_0) {
 }
 
 TEST(attack, attack_1) {
-  CardAction action = {0};
+  Action action = {0};
   auto result = parse_attack("Deal 3.2e-1 Base Damage to Target Enemy.", &action);
   ASSERT_EQ(result[0], '\0');
 
@@ -212,10 +212,10 @@ TEST(attack, attack_1) {
   ASSERT_EQ(action.target, TARGET_ENEMY);
 }
 
-extern "C" const char * parse_self_buff(const char * input, CardAction * action);
+extern "C" const char * parse_self_buff(const char * input, Action * action);
 
 TEST(self_buff, self_buff_0) {
-  CardAction action = {0};
+  Action action = {0};
   auto result = parse_self_buff("Gain 3.2e-1 Defense.", &action);
   ASSERT_EQ(result[0], '\0');
 
@@ -229,7 +229,7 @@ TEST(self_buff, self_buff_0) {
 }
 
 TEST(self_buff, self_buff_1) {
-  CardAction action = {0};
+  Action action = {0};
   auto result = parse_self_buff("Gain 3.2e-1 Defense for 1 Turn.", &action);
   ASSERT_EQ(result[0], '\0');
 
@@ -243,7 +243,7 @@ TEST(self_buff, self_buff_1) {
 }
 
 TEST(self_buff, self_buff_2) {
-  CardAction action = {0};
+  Action action = {0};
   auto result = parse_self_buff("Gain 3.2e-1 Defense for 3 Turns.", &action);
   ASSERT_EQ(result[0], '\0');
 
@@ -256,10 +256,10 @@ TEST(self_buff, self_buff_2) {
   ASSERT_EQ(action.target, SELF);
 }
 
-extern "C" const char * parse_enemy_debuff(const char * input, CardAction * action);
+extern "C" const char * parse_enemy_debuff(const char * input, Action * action);
 
 TEST(enemy_debuff, enemy_debuff_0) {
-  CardAction action = {0};
+  Action action = {0};
   auto result = parse_enemy_debuff("Apply 0.35 Stumble to All Enemies.", &action);
 
   ASSERT_EQ(result[0], '\0');
@@ -274,7 +274,7 @@ TEST(enemy_debuff, enemy_debuff_0) {
 }
 
 TEST(enemy_debuff, enemy_debuff_1) {
-  CardAction action = {0};
+  Action action = {0};
   auto result = parse_enemy_debuff("Apply 0.35 Corrode to Target Enemy for 1 Turn.", &action);
 
   ASSERT_EQ(result[0], '\0');
@@ -536,7 +536,7 @@ Hidey Hole: 5)";
   free_card_pool(starting_deck);
 }
 
-extern "C" char * cat_enemy_debuff_to_stream(char * to, CardAction a);
+extern "C" char * cat_enemy_debuff_to_stream(char * to, Action a);
 
 TEST(to_stream, enemy_debuff_to_stream_0) {
   auto input_card_pool = R"(Name:   | Bad Luck Kitty                                 |
@@ -592,7 +592,7 @@ Action: | Apply 6.5e-1 Corrode to All Enemies. |)";
   free_card_pool(card_pool);
 }
 
-extern "C" char * cat_self_buff_to_stream(char * to, CardAction a);
+extern "C" char * cat_self_buff_to_stream(char * to, Action a);
 
 TEST(to_stream, self_buff_0) {
   auto input_card_pool = R"(Name:   | Zoomies        |
@@ -648,7 +648,7 @@ Action: | Gain 1e0 Damage for 2 Turns. |)";
   free_card_pool(card_pool);
 }
 
-extern "C" char * cat_attack_to_stream(char * to, CardAction a);
+extern "C" char * cat_attack_to_stream(char * to, Action a);
 
 TEST(to_stream, attack_0) {
   auto input_card_pool = R"(Name:   | Cataclysm                            |

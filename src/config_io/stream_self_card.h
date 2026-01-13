@@ -9,6 +9,8 @@
 #define MAX_ACTIONS   8
 #define MAX_CARD_TEXT 256
 
+#define KW_SPACE " "
+
 // Note that this structure is meant to be completely dis-joint from the self
 // state. The reasoning for this being is that its use ought to be more broad
 // than that, hence recording the qty_actions here. This stream ought to be

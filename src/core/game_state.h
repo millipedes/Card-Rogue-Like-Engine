@@ -3,12 +3,12 @@
 
 #include <stdint.h>
 
-#include "enemy.h"
+#include "enemy_state.h"
 #include "self_state.h"
 
 typedef struct {
   SelfState self_state;
-  Enemy * enemies;
+  EnemyState * enemies;
   uint8_t qty_enemies;
 } GameState;
 

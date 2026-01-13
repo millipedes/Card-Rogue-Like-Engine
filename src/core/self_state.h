@@ -35,7 +35,7 @@ typedef struct {
   CardSetRef removed;
   uint8_t qty_removed;
   // 0           -> bottom of deck
-  // in_deck_qty -> top of deck
+  // qty_in_deck -> top of deck
   CardSetRef in_deck;
   uint8_t qty_in_deck;
 

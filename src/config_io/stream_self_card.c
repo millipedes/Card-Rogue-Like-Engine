@@ -31,7 +31,7 @@ void cat_duration_to_stream(char * to, Duration d) {
   }
 }
 
-void cat_enemy_debuff_to_stream(char * to, CardAction a) {
+void cat_enemy_debuff_to_stream(char * to, Action a) {
   strncat(to, KW_APPLY, MAX_CARD_TEXT);
   strncat(to, KW_SPACE, MAX_CARD_TEXT);
 
@@ -55,7 +55,7 @@ void cat_enemy_debuff_to_stream(char * to, CardAction a) {
   strncat(to, KW_PERIOD, MAX_CARD_TEXT);
 }
 
-void cat_self_buff_to_stream(char * to, CardAction a) {
+void cat_self_buff_to_stream(char * to, Action a) {
   strncat(to, KW_GAIN, MAX_CARD_TEXT);
   strncat(to, KW_SPACE, MAX_CARD_TEXT);
 
@@ -72,7 +72,7 @@ void cat_self_buff_to_stream(char * to, CardAction a) {
   strncat(to, KW_PERIOD, MAX_CARD_TEXT);
 }
 
-void cat_attack_to_stream(char * to, CardAction a) {
+void cat_attack_to_stream(char * to, Action a) {
   strncat(to, KW_DEAL, MAX_CARD_TEXT);
   strncat(to, KW_SPACE, MAX_CARD_TEXT);
 
@@ -93,7 +93,7 @@ void cat_attack_to_stream(char * to, CardAction a) {
   strncat(to, KW_PERIOD, MAX_CARD_TEXT);
 }
 
-void action_to_stream(char * to, CardAction a) {
+void action_to_stream(char * to, Action a) {
   switch (a.type) {
     case ENEMY_DEBUFF:
       cat_enemy_debuff_to_stream(to, a);
