@@ -9,7 +9,7 @@ BattleView init_battle_view(SelfStateRef self_state_ref) {
   getmaxyx(stdscr, screen_h, screen_w);
 
   view.enemy_space = newwin(
-      screen_h * 70 / 100, // y len
+      screen_h * 75 / 100, // y len
       screen_w * 55 / 100, // x len
       0,                   // y start
       screen_w * 45 / 100  // x start
@@ -17,7 +17,7 @@ BattleView init_battle_view(SelfStateRef self_state_ref) {
   box(view.enemy_space, 0, 0);
 
   view.self_space = newwin(
-      screen_h * 70 / 100,
+      screen_h * 75 / 100,
       screen_w * 45 / 100,
       0,
       0
@@ -26,9 +26,9 @@ BattleView init_battle_view(SelfStateRef self_state_ref) {
   box(view.self_space, 0, 0);
 
   view.info_space = newwin(
-      screen_h * 30 / 100,
+      screen_h * 25 / 100,
       screen_w,
-      screen_h * 70 / 100,
+      screen_h * 75 / 100,
       0
   );
   box(view.info_space, 0, 0);
