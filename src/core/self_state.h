@@ -5,16 +5,9 @@
 
 #include "config_io/parsing_self_state.h"
 
-#define MAX_PATH_LEN 256
-#define MAX_FILE_LEN (1024 * 1024)
-
 #define SELF_ART_FILE_NAME           "art.txt"
 #define SELF_CARD_POOL_FILE_NAME     "card_pool.txt"
 #define SELF_STARTING_DECK_FILE_NAME "starting_deck.txt"
-
-#define NEWLINE_TOK "\n"
-
-#define ART_MAX_WIDTH 128
 
 #define MAX_SET_LEN 128
 

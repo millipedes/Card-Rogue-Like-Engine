@@ -6,6 +6,8 @@ project(CardRL)
 ################
 set(SRC_DIR ${CMAKE_SOURCE_DIR}/src)
 set(LIB_SRC_FILES
+  ${SRC_DIR}/core/core_utilities.c
+  ${SRC_DIR}/core/enemy_state.c
   ${SRC_DIR}/core/game_state.c
   ${SRC_DIR}/core/self_state.c
   ${SRC_DIR}/config_io/parsing_common_state.c
