@@ -12,4 +12,7 @@ typedef struct {
   uint8_t qty_enemies;
 } GameState;
 
+void add_enemy(GameState * state, EnemyState enemy);
+void free_game_state(GameState state);
+
 #endif

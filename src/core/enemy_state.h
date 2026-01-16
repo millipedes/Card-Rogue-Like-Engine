@@ -19,6 +19,7 @@ extern "C" {
 #endif
 
 EnemyState init_enemy_state(const char * root_dir);
+void free_enemy_state(EnemyState enemy_state);
 
 #ifdef __cplusplus
 }

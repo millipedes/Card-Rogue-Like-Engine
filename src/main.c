@@ -3,6 +3,8 @@
 #include <ncurses.h>
 #include <time.h>
 
+#include "config_io/directory_reader.h"
+
 #include "core/self_state.h"
 
 #include "graphics/battle_view.h"
@@ -15,13 +17,14 @@ int main(int argc, char * argv[]) {
     exit(1);
   }
 
+
   srand(time(NULL));
 
-  SelfState self_state = init_self_state(argv[1]);
-  self_state = start_battle(self_state, STARTING_HAND_SIZE);
+  GameState state = read_configuration(argv[1]);
+  state.self_state = start_battle(state.self_state, STARTING_HAND_SIZE);
 
   init_ncurses();
-  BattleView view = init_battle_view(&self_state);
+  BattleView view = init_battle_view(&state.self_state);
 
   int prev_h = 0;
   int prev_w = 0;
@@ -59,12 +62,12 @@ int main(int argc, char * argv[]) {
       clear();
       refresh();
       free_battle_view(view);
-      view = init_battle_view(&self_state);
+      view = init_battle_view(&state.self_state);
     }
   }
 
   free_battle_view(view);
-  free_self_state(self_state);
+  free_game_state(state);
   end_ncurses();
   return 0;
 }

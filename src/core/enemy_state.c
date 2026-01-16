@@ -20,3 +20,13 @@ EnemyState init_enemy_state(const char * root_dir) {
 
   return enemy_state;
 }
+
+void free_enemy_state(EnemyState enemy_state) {
+  if (enemy_state.art_lines) {
+    for (uint8_t i = 0; i < enemy_state.qty_art_lines; i++) {
+      free(enemy_state.art_lines[i]);
+    }
+    free(enemy_state.art_lines);
+  }
+  free_move_pool(enemy_state.move_pool);
+}
