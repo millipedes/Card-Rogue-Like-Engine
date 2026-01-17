@@ -31,17 +31,6 @@ SelfState init_self_state(const char * root_dir) {
   return self_state;
 }
 
-size_t max_art_width(SelfState self_state) {
-  size_t max_len = 0;
-  for (uint8_t i = 0; i < self_state.qty_art_lines; i++) {
-    size_t curr_len = strnlen(self_state.art_lines[i], ART_MAX_WIDTH);
-    if (curr_len > max_len) {
-      max_len = curr_len;
-    }
-  }
-  return max_len;
-}
-
 size_t max_hand_name_width(SelfState self_state) {
   size_t max_len = 0;
   for (uint8_t i = 0; i < self_state.qty_hand; i++) {

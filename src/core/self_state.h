@@ -41,7 +41,6 @@ extern "C" {
 
 // SelfState Maintenance
 SelfState init_self_state(const char * root_dir);
-size_t max_art_width(SelfState self_state);
 size_t max_hand_name_width(SelfState self_state);
 void free_self_state(SelfState self);
 

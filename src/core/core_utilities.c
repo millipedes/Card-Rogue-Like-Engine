@@ -65,3 +65,14 @@ void get_art_lines(char *** art_lines, uint8_t * qty_art_lines,
   } while (tmp);
   free(into);
 }
+
+size_t max_art_width(char ** art_lines, uint8_t qty_art_lines) {
+  size_t max_len = 0;
+  for (uint8_t i = 0; i < qty_art_lines; i++) {
+    size_t curr_len = strnlen(art_lines[i], ART_MAX_WIDTH);
+    if (curr_len > max_len) {
+      max_len = curr_len;
+    }
+  }
+  return max_len;
+}

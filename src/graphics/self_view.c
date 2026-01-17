@@ -2,6 +2,8 @@
 
 #include <string.h>
 
+#include "core/core_utilities.h"
+
 SelfView init_self_view(WINDOW * parent, SelfStateRef self_state_ref) {
   SelfView self_view = {0};
   self_view.self_state_ref = self_state_ref;
@@ -12,7 +14,7 @@ SelfView init_self_view(WINDOW * parent, SelfStateRef self_state_ref) {
 
   self_view.art_space = derwin(parent,
       self_state_ref->qty_art_lines + 3,
-      max_art_width(*self_state_ref) + 4,
+      max_art_width(self_state_ref->art_lines, self_state_ref->qty_art_lines) + 4,
       parent_h * 25 / 100,
       parent_w * 35 / 100
   );
@@ -35,7 +37,7 @@ SelfView init_self_view(WINDOW * parent, SelfStateRef self_state_ref) {
   return self_view;
 }
 
-void draw_art(SelfView self_view) {
+void draw_self_art(SelfView self_view) {
   werase(self_view.art_space);
   for (uint8_t i = 0; i < self_view.self_state_ref->qty_art_lines; i++) {
     mvwprintw(self_view.art_space,
@@ -123,18 +125,18 @@ SelfView draw_hand_new_select(SelfView self_view, int dir) {
 SelfView update_self_view(SelfView self_view, BattleMessage message) {
   switch (message) {
     case MSG_HAND_SELECT_DOWN:
-      draw_art(self_view);
+      draw_self_art(self_view);
       self_view = draw_hand_new_select(self_view, 1);
       draw_card_streams(self_view);
       break;
     case MSG_HAND_SELECT_UP:
-      draw_art(self_view);
+      draw_self_art(self_view);
       self_view = draw_hand_new_select(self_view, -1);
       draw_card_streams(self_view);
       break;
     case MSG_STANDBY:
     default:
-      draw_art(self_view);
+      draw_self_art(self_view);
       draw_hand(self_view);
       draw_card_streams(self_view);
       break;

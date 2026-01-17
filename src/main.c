@@ -5,6 +5,7 @@
 
 #include "config_io/directory_reader.h"
 
+#include "core/game_state.h"
 #include "core/self_state.h"
 
 #include "graphics/battle_view.h"
@@ -24,13 +25,14 @@ int main(int argc, char * argv[]) {
   state.self_state = start_battle(state.self_state, STARTING_HAND_SIZE);
 
   init_ncurses();
-  BattleView view = init_battle_view(&state.self_state);
+  BattleView view = init_battle_view(&state);
 
   int prev_h = 0;
   int prev_w = 0;
   getmaxyx(stdscr, prev_h, prev_w);
 
   int ch = '\0';
+  // 60 FPS
   timeout(16);
   while (true) {
     int curr_h;
@@ -62,7 +64,7 @@ int main(int argc, char * argv[]) {
       clear();
       refresh();
       free_battle_view(view);
-      view = init_battle_view(&state.self_state);
+      view = init_battle_view(&state);
     }
   }
 

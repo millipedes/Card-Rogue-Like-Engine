@@ -29,6 +29,7 @@ add_library(CardRLCore ${LIB_SRC_FILES})
 set(EXE_SRC_FILES
   ${SRC_DIR}/graphics/battle_view.c
   ${SRC_DIR}/graphics/core_graphics.c
+  ${SRC_DIR}/graphics/enemy_view.c
   ${SRC_DIR}/graphics/self_view.c
 )
 
