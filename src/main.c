@@ -18,7 +18,6 @@ int main(int argc, char * argv[]) {
     exit(1);
   }
 
-
   srand(time(NULL));
 
   GameState state = read_configuration(argv[1]);
@@ -31,7 +30,7 @@ int main(int argc, char * argv[]) {
   int prev_w = 0;
   getmaxyx(stdscr, prev_h, prev_w);
 
-  int ch = '\0';
+  int ch = 0;
   // 60 FPS
   timeout(16);
   while (true) {

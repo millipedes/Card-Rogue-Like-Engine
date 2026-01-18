@@ -29,7 +29,7 @@ SelfView init_self_view(WINDOW * parent, SelfStateRef self_state_ref) {
 
   self_view.card_space = derwin(parent,
       self_view.card_streams.qty_actions + 5, // Name, cost, rarity, border
-      max_action_text_len(self_view.card_streams) + 4,
+      max_action_text_len(self_view.card_streams.action_texts, self_view.card_streams.qty_actions) + 4,
       parent_h * 50 / 100,
       max_hand_name_width(*self_state_ref) + 5
   );
@@ -73,7 +73,8 @@ void draw_card_streams(SelfView self_view) {
     self_view.card_streams = (CardStreams){0};
     self_view.card_streams
       = card_to_stream(*self_view.self_state_ref->hand[self_view.selected]);
-    wresize(self_view.card_space, self_view.card_streams.qty_actions + 5, max_action_text_len(self_view.card_streams) + 4);
+    wresize(self_view.card_space, self_view.card_streams.qty_actions + 5,
+        max_action_text_len(self_view.card_streams.action_texts, self_view.card_streams.qty_actions) + 4);
   }
   mvwprintw(self_view.card_space,
       1,

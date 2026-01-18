@@ -15,6 +15,8 @@ set(LIB_SRC_FILES
   ${SRC_DIR}/config_io/parsing.c
   ${SRC_DIR}/config_io/parsing_enemy_state.c
   ${SRC_DIR}/config_io/parsing_self_state.c
+  ${SRC_DIR}/config_io/stream_common.c
+  ${SRC_DIR}/config_io/stream_enemy_move.c
   ${SRC_DIR}/config_io/stream_self_card.c
 )
 

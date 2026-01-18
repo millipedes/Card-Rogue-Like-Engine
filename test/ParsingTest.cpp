@@ -575,7 +575,7 @@ Action: | Apply 0.65 Corrode to All Enemies for 2 Turns. |)";
   CardPool card_pool = {0};
   parse_self_card_pool(input_card_pool, &card_pool);
 
-  char tmp[MAX_CARD_TEXT] = {0};
+  char tmp[MAX_ACTION_TEXT] = {0};
 
   cat_enemy_debuff_to_stream(tmp, card_pool.cards[0].actions[0]);
 
@@ -593,7 +593,7 @@ Action: | Apply 0.651 Stumble to All Enemies for 1 Turn. |)";
   CardPool card_pool = {0};
   parse_self_card_pool(input_card_pool, &card_pool);
 
-  char tmp[MAX_CARD_TEXT] = {0};
+  char tmp[MAX_ACTION_TEXT] = {0};
 
   cat_enemy_debuff_to_stream(tmp, card_pool.cards[0].actions[0]);
 
@@ -611,7 +611,7 @@ Action: | Apply 6.5e-1 Corrode to All Enemies. |)";
   CardPool card_pool = {0};
   parse_self_card_pool(input_card_pool, &card_pool);
 
-  char tmp[MAX_CARD_TEXT] = {0};
+  char tmp[MAX_ACTION_TEXT] = {0};
 
   cat_enemy_debuff_to_stream(tmp, card_pool.cards[0].actions[0]);
 
@@ -631,7 +631,7 @@ Action: | Gain 1 Damage. |)";
   CardPool card_pool = {0};
   parse_self_card_pool(input_card_pool, &card_pool);
 
-  char tmp[MAX_CARD_TEXT] = {0};
+  char tmp[MAX_ACTION_TEXT] = {0};
 
   cat_self_buff_to_stream(tmp, card_pool.cards[0].actions[0]);
 
@@ -649,7 +649,7 @@ Action: | Gain 1.00000 Damage for 1 Turn. |)";
   CardPool card_pool = {0};
   parse_self_card_pool(input_card_pool, &card_pool);
 
-  char tmp[MAX_CARD_TEXT] = {0};
+  char tmp[MAX_ACTION_TEXT] = {0};
 
   cat_self_buff_to_stream(tmp, card_pool.cards[0].actions[0]);
 
@@ -667,7 +667,7 @@ Action: | Gain 1e0 Damage for 2 Turns. |)";
   CardPool card_pool = {0};
   parse_self_card_pool(input_card_pool, &card_pool);
 
-  char tmp[MAX_CARD_TEXT] = {0};
+  char tmp[MAX_ACTION_TEXT] = {0};
 
   cat_self_buff_to_stream(tmp, card_pool.cards[0].actions[0]);
 
@@ -687,7 +687,7 @@ Action: | Deal 40 Base Damage to Target Enemy. |)";
   CardPool card_pool = {0};
   parse_self_card_pool(input_card_pool, &card_pool);
 
-  char tmp[MAX_CARD_TEXT] = {0};
+  char tmp[MAX_ACTION_TEXT] = {0};
 
   cat_attack_to_stream(tmp, card_pool.cards[0].actions[0]);
 
@@ -705,7 +705,7 @@ Action: | Deal 4E+1 Base Damage to All Enemies. |)";
   CardPool card_pool = {0};
   parse_self_card_pool(input_card_pool, &card_pool);
 
-  char tmp[MAX_CARD_TEXT] = {0};
+  char tmp[MAX_ACTION_TEXT] = {0};
 
   cat_attack_to_stream(tmp, card_pool.cards[0].actions[0]);
 

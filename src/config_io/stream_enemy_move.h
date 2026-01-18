@@ -1,27 +1,24 @@
-#ifndef STREAM_SELF_CARD_H
-#define STREAM_SELF_CARD_H
+#ifndef ENEMY_MOVE_H
+#define ENEMY_MOVE_H
 
 #include <stddef.h>
 #include <stdint.h>
 
-#include "config_io/parsing_self_state.h"
+#include "config_io/parsing_enemy_state.h"
 
 #include "stream_common.h"
 
 typedef struct {
-  char name[MAX_CARD_NAME_LEN];
-  char cost[MAX_CARD_NAME_LEN];
-  char rarity[MAX_CARD_NAME_LEN];
   char action_texts[MAX_ACTIONS][MAX_ACTION_TEXT];
   uint8_t qty_actions;
-} CardStreams;
+} MoveStream;
 
 // Public API
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-CardStreams card_to_stream(Card card);
+MoveStream move_to_stream(Move move);
 
 #ifdef __cplusplus
 }
