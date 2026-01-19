@@ -6,7 +6,6 @@ project(CardRL)
 ################
 set(SRC_DIR ${CMAKE_SOURCE_DIR}/src)
 set(LIB_SRC_FILES
-  ${SRC_DIR}/core/core_utilities.c
   ${SRC_DIR}/core/enemy_state.c
   ${SRC_DIR}/core/game_state.c
   ${SRC_DIR}/core/self_state.c
@@ -15,9 +14,7 @@ set(LIB_SRC_FILES
   ${SRC_DIR}/config_io/parsing.c
   ${SRC_DIR}/config_io/parsing_enemy_state.c
   ${SRC_DIR}/config_io/parsing_self_state.c
-  ${SRC_DIR}/config_io/stream_common.c
-  ${SRC_DIR}/config_io/stream_enemy_move.c
-  ${SRC_DIR}/config_io/stream_self_card.c
+  ${SRC_DIR}/config_io/text_stream.c
 )
 
 include_directories(
@@ -29,9 +26,9 @@ find_package(Curses REQUIRED)
 add_library(CardRLCore ${LIB_SRC_FILES})
 
 set(EXE_SRC_FILES
-  ${SRC_DIR}/graphics/battle_view.c
+  # ${SRC_DIR}/graphics/battle_view.c
   ${SRC_DIR}/graphics/core_graphics.c
-  ${SRC_DIR}/graphics/enemy_view.c
+  # ${SRC_DIR}/graphics/enemy_view.c
   ${SRC_DIR}/graphics/self_view.c
 )
 

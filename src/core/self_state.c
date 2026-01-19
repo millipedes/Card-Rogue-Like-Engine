@@ -4,53 +4,31 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "core_utilities.h"
-
 SelfState init_self_state(const char * root_dir) {
   SelfState self_state = {0};
   char * tmp_art_file_name = make_file_name(root_dir, SELF_ART_FILE_NAME);
-  get_art_lines(&self_state.art_lines, &self_state.qty_art_lines,
-      tmp_art_file_name);
+  dump_file_contents(self_state.art_lines, tmp_art_file_name);
   free(tmp_art_file_name);
 
   char * tmp_card_pool_file_name = make_file_name(root_dir,
       SELF_CARD_POOL_FILE_NAME);
-  char * card_pool_input = dump_file_contents(tmp_card_pool_file_name);
+  TextStream card_pool_input = {0};
+  dump_file_contents(card_pool_input, tmp_card_pool_file_name);
   parse_self_card_pool(card_pool_input, &self_state.card_pool);
   free(tmp_card_pool_file_name);
-  free(card_pool_input);
 
   char * tmp_starting_deck_file_name = make_file_name(root_dir,
       SELF_STARTING_DECK_FILE_NAME);
-  char * starting_deck_input = dump_file_contents(tmp_starting_deck_file_name);
+  TextStream starting_deck_input = {0};
+  dump_file_contents(starting_deck_input, tmp_starting_deck_file_name);
   parse_self_starting_deck(starting_deck_input, &self_state.card_pool,
       &self_state.deck);
   free(tmp_starting_deck_file_name);
-  free(starting_deck_input);
 
   return self_state;
 }
 
-size_t max_hand_name_width(SelfState self_state) {
-  size_t max_len = 0;
-  for (uint8_t i = 0; i < self_state.qty_hand; i++) {
-    size_t curr_len = strnlen(self_state.hand[i]->name, MAX_CARD_NAME_LEN);
-    if (curr_len > max_len) {
-      max_len = curr_len;
-    }
-  }
-  return max_len;
-}
-
 void free_self_state(SelfState self_state) {
-  for (uint8_t i = 0; i < self_state.qty_art_lines; i++) {
-    if (self_state.art_lines[i]) {
-      free(self_state.art_lines[i]);
-    }
-  }
-  if (self_state.art_lines) {
-    free(self_state.art_lines);
-  }
   free_card_pool(self_state.card_pool);
   free_card_pool(self_state.deck);
 }

@@ -4,7 +4,7 @@
 #include <ncurses.h>
 
 #include "core/self_state.h"
-#include "config_io/stream_self_card.h"
+#include "config_io/text_stream.h"
 #include "messages.h"
 
 typedef SelfState * SelfStateRef;
@@ -13,10 +13,11 @@ typedef struct {
   WINDOW * art_space;
 
   WINDOW * hand_space;
+  TextStream hand_names_stream;
   uint8_t selected;
 
   WINDOW * card_space;
-  CardStreams card_streams;
+  TextStream card_text_stream;
 
   SelfStateRef self_state_ref;
 } SelfView;

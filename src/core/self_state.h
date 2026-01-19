@@ -4,6 +4,7 @@
 #include <stddef.h>
 
 #include "config_io/parsing_self_state.h"
+#include "config_io/text_stream.h"
 
 #define SELF_ART_FILE_NAME           "art.txt"
 #define SELF_CARD_POOL_FILE_NAME     "card_pool.txt"
@@ -16,8 +17,7 @@
 typedef Card * CardSetRef[MAX_SET_LEN];
 
 typedef struct {
-  char ** art_lines; // pre-grabbing lines leads to less friction with ncurses
-  uint8_t qty_art_lines;
+  TextStream art_lines; // pre-grabbing lines leads to less friction with ncurses
   Deck deck;
   CardPool card_pool;
 
@@ -41,7 +41,6 @@ extern "C" {
 
 // SelfState Maintenance
 SelfState init_self_state(const char * root_dir);
-size_t max_hand_name_width(SelfState self_state);
 void free_self_state(SelfState self);
 
 // Deck Operations

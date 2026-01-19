@@ -1,7 +1,5 @@
 #include "enemy_view.h"
 
-#include "core/core_utilities.h"
-
 EnemyView init_enemy_view(WINDOW * parent, EnemyStateRef enemy_state_ref) {
   EnemyView enemy_view = {0};
   enemy_view.enemy_state_ref = enemy_state_ref;
@@ -12,16 +10,16 @@ EnemyView init_enemy_view(WINDOW * parent, EnemyStateRef enemy_state_ref) {
 
   enemy_view.art_space = derwin(parent,
       enemy_state_ref->qty_art_lines + 3,
-      max_art_width(enemy_state_ref->art_lines, enemy_state_ref->qty_art_lines) + 4,
+      max_tstream_len(enemy_state_ref->art_lines) + 4,
       parent_h * 25 / 100,
       parent_w * 50 / 100
   );
   box(enemy_view.art_space, 0, 0);
 
-  enemy_view.move_stream = move_to_stream(enemy_state_ref->move_pool.moves[0]);
+  move_to_stream(enemy_view.move_stream, enemy_state_ref->move_pool.moves[0]);
   enemy_view.move_space = derwin(parent,
-      enemy_view.move_stream.qty_actions + 2,
-      max_action_text_len(enemy_view.move_stream.action_texts, enemy_view.move_stream.qty_actions) + 4,
+      max_tstream_height(enemy_view.move_stream) + 2,
+      max_tstream_len(enemy_view.move_stream) + 4,
       parent_h * 50 / 100,
       parent_w * 45 / 100
   );
@@ -44,11 +42,11 @@ void draw_enemy_art(EnemyView enemy_view) {
 
 void draw_move_stream(EnemyView enemy_view) {
   werase(enemy_view.move_space);
-  for (uint8_t i = 0; i < enemy_view.move_stream.qty_actions; i++) {
+  for (uint8_t i = 0; i < max_tstream_height(enemy_view.move_stream); i++) {
     mvwprintw(enemy_view.move_space,
         1 + i,
         1,
-        " %s ", enemy_view.move_stream.action_texts[i]
+        " %s ", enemy_view.move_stream
     );
   }
 

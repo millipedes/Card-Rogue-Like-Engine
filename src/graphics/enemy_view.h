@@ -4,7 +4,7 @@
 #include <ncurses.h>
 
 #include "core/enemy_state.h"
-#include "config_io/stream_enemy_move.h"
+#include "config_io/text_stream.h"
 
 #include "messages.h"
 
@@ -14,7 +14,7 @@ typedef struct {
   WINDOW * art_space;
 
   WINDOW * move_space;
-  MoveStream move_stream;
+  TextStream move_stream;
 
   EnemyStateRef enemy_state_ref;
 } EnemyView;

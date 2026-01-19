@@ -2,13 +2,13 @@
 #define ENEMY_STATE_H
 
 #include "config_io/parsing_enemy_state.h"
+#include "config_io/text_stream.h"
 
 #define ENEMY_ART_FILE_NAME       "art.txt"
 #define ENEMY_MOVE_POOL_FILE_NAME "move_pool.txt"
 
 typedef struct {
-  char ** art_lines; // pre-grabbing lines leads to less friction with ncurses
-  uint8_t qty_art_lines;
+  TextStream art_lines; // pre-grabbing lines leads to less friction with ncurses
 
   MovePool move_pool;
 } EnemyState;

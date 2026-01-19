@@ -2,7 +2,7 @@
 
 #include <string.h>
 
-#include "core/core_utilities.h"
+#include "config_io/text_stream.h"
 
 BattleView init_battle_view(GameStateRef game_state_ref) {
   BattleView view = {0};
