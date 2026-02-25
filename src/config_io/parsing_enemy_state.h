@@ -37,12 +37,27 @@ typedef struct {
   uint8_t qty_moves;
 } MovePool;
 
+// Bitmap is as follows:
+// (Health)
+// I.e.
+//        1
+// => Seen everything
+//        0
+// => Seen nothing
+#define ENEMY_REQ_STATS_BIT_NO 0b1
+#define ENEMY_MAX_HEALTH_BIT   0
+
+typedef struct {
+  double health;
+} EnemyStats;
+
 // Public API
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 const char * parse_enemy_move_pool(const char * input, MovePool * move_pool);
+const char * parse_enemy_stats(const char * input, EnemyStats * enemy_stats);
 void free_move_pool(MovePool move_pool);
 
 #ifdef __cplusplus

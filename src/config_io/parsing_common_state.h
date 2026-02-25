@@ -29,6 +29,9 @@
 #define KW_COLON    ":"
 #define KW_VERT_BAR "|"
 
+// Stat Keywords
+#define KW_HEALTH   "Health"
+
 typedef enum {
   INDEFINITE,
   FINITE,

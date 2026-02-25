@@ -549,6 +549,14 @@ Max Health: 90.0)";
   ASSERT_NEAR(self_stats.starting_health, 37.5, eps);
 }
 
+TEST(enemy_stats, enemy_stats_0) {
+  auto input_stats = R"(Health: 15.5)";
+  EnemyStats enemy_stats = {0};
+  auto result_stats = parse_enemy_stats(input_stats, &enemy_stats);
+  ASSERT_EQ(result_stats[0], '\0');
+  ASSERT_NEAR(enemy_stats.health, 15.5, eps);
+}
+
 TEST(enemy_move_pool, enemy_move_pool_0) {
   auto input_move_pool = R"(Action:      | Deal 2 Base Damage to All Enemies. |
 Cardinality: | 1                   |

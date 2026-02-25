@@ -20,7 +20,6 @@
 #define KW_RARITY   "Rarity"
 #define KW_MAX      "Max"
 #define KW_STARTING "Starting"
-#define KW_HEALTH   "Health"
 // These are for a parsing trick
 #define CHAR_COLON    ':'
 #define CHAR_VERT_BAR '|'
@@ -74,6 +73,7 @@ typedef CardPool Deck;
 #define SELF_REQ_STATS_BIT_NO      0b11
 #define SELF_MAX_HEALTH_BIT        1
 #define SELF_STARTING_HEALTH_BIT   0
+
 typedef struct {
   double max_health;
   double starting_health;

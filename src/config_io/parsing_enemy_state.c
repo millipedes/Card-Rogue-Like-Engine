@@ -95,6 +95,26 @@ const char * parse_enemy_move_pool(const char * input, MovePool * move_pool) {
   return parse_ws(final_input);
 }
 
+const char * parse_enemy_stats(const char * input, EnemyStats * enemy_stats) {
+  const char * result = input;
+  const char * tmp_result = NULL;
+  uint8_t stat_bitmap = 0b0;
+  while (stat_bitmap != ENEMY_REQ_STATS_BIT_NO && result != NULL) {
+    double tmp_numeric = 0.0;
+    if (tmp_result = parse_keywords(parse_ws(result), 2, KW_HEALTH, KW_COLON)) {
+      if (!(tmp_result = parse_number(parse_ws(tmp_result), &tmp_numeric))) {
+        return NULL;
+      }
+      enemy_stats->health = tmp_numeric;
+      stat_bitmap |= (1U << ENEMY_MAX_HEALTH_BIT);
+      result = tmp_result;
+    } else {
+      result = NULL;
+    }
+  }
+  return result;
+}
+
 void free_move(Move move) {
   if (move.actions) {
     free(move.actions);

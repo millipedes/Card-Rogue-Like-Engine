@@ -13,6 +13,15 @@ EnemyState init_enemy_state(const char * root_dir) {
       tmp_art_file_name);
   free(tmp_art_file_name);
 
+  EnemyStats enemy_stats = {0};
+  char * tmp_stats_file_name = make_file_name(root_dir, ENEMY_STATS_FILE_NAME);
+  char * stats_input = dump_file_contents(tmp_stats_file_name);
+  parse_enemy_stats(stats_input, &enemy_stats);
+  free(tmp_stats_file_name);
+  free(stats_input);
+
+  enemy_state.health = enemy_stats.health;
+
   char * tmp_move_pool_file_name = make_file_name(root_dir,
       ENEMY_MOVE_POOL_FILE_NAME);
   char * move_pool_input = dump_file_contents(tmp_move_pool_file_name);

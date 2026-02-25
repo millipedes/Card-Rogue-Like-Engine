@@ -14,7 +14,9 @@ SelfView init_self_view(WINDOW * parent, SelfStateRef self_state_ref) {
   getmaxyx(parent, parent_h, parent_w);
 
   char buf[ART_MAX_WIDTH] = {0};
-  snprintf(buf, ART_MAX_WIDTH, "%.2f / %.2f", self_view.self_state_ref->current_health, self_view.self_state_ref->max_health);
+  snprintf(buf, ART_MAX_WIDTH, "%.2f / %.2f",
+      self_view.self_state_ref->current_health,
+      self_view.self_state_ref->max_health);
 
   self_view.art_space = derwin(parent,
       self_state_ref->qty_art_lines + 4,
