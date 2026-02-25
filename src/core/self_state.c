@@ -8,10 +8,21 @@
 
 SelfState init_self_state(const char * root_dir) {
   SelfState self_state = {0};
+  self_state.name = make_entity_name(root_dir, SELF_DIR_PREFIX);
+
   char * tmp_art_file_name = make_file_name(root_dir, SELF_ART_FILE_NAME);
   get_art_lines(&self_state.art_lines, &self_state.qty_art_lines,
       tmp_art_file_name);
   free(tmp_art_file_name);
+
+  SelfStats self_stats = {0};
+  char * tmp_stats_file_name = make_file_name(root_dir, SELF_STATS_FILE_NAME);
+  char * stats_input = dump_file_contents(tmp_stats_file_name);
+  parse_self_stats(stats_input, &self_stats);
+  self_state.max_health = self_stats.max_health;
+  self_state.current_health = self_stats.starting_health;
+  free(tmp_stats_file_name);
+  free(stats_input);
 
   char * tmp_card_pool_file_name = make_file_name(root_dir,
       SELF_CARD_POOL_FILE_NAME);
@@ -43,6 +54,9 @@ size_t max_hand_name_width(SelfState self_state) {
 }
 
 void free_self_state(SelfState self_state) {
+  if (self_state.name) {
+    free(self_state.name);
+  }
   for (uint8_t i = 0; i < self_state.qty_art_lines; i++) {
     if (self_state.art_lines[i]) {
       free(self_state.art_lines[i]);

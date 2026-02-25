@@ -38,6 +38,10 @@ void draw_enemy_art(EnemyView enemy_view) {
         1,
         " %s ", enemy_view.enemy_state_ref->art_lines[i]);
   }
+  mvwprintw(enemy_view.art_space,
+      enemy_view.enemy_state_ref->qty_art_lines + 1,
+      1,
+      " %s ", enemy_view.enemy_state_ref->name);
   box(enemy_view.art_space, 0, 0);
   wrefresh(enemy_view.art_space);
 }

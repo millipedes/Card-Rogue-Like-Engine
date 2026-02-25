@@ -3,8 +3,6 @@
 
 #include "core/game_state.h"
 
-#define SELF_DIR_PREFIX    "Self"
-#define ENEMY_DIR_PREFIX   "Enemy"
 #define DIR_CONNECTOR      "/"
 #define DIR_CONNECTOR_CHAR '/'
 

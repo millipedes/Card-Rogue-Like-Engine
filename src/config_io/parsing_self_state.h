@@ -18,6 +18,9 @@
 #define KW_COST     "Cost"
 #define KW_ACTION   "Action"
 #define KW_RARITY   "Rarity"
+#define KW_MAX      "Max"
+#define KW_STARTING "Starting"
+#define KW_HEALTH   "Health"
 // These are for a parsing trick
 #define CHAR_COLON    ':'
 #define CHAR_VERT_BAR '|'
@@ -61,6 +64,21 @@ typedef struct {
 
 typedef CardPool Deck;
 
+// Bitmap is as follows:
+// (Max Health) (Starting Health)
+// I.e.
+//            1                  1
+// => Seen everything
+//            0                  0
+// => Seen nothing
+#define SELF_REQ_STATS_BIT_NO      0b11
+#define SELF_MAX_HEALTH_BIT        1
+#define SELF_STARTING_HEALTH_BIT   0
+typedef struct {
+  double max_health;
+  double starting_health;
+} SelfStats;
+
 // Public API
 #ifdef __cplusplus
 extern "C" {
@@ -69,6 +87,7 @@ extern "C" {
 const char * parse_self_card_pool(const char * input, CardPool * card_pool);
 const char * parse_self_starting_deck(const char * input,
     const CardPool * card_pool, Deck * deck);
+const char * parse_self_stats(const char * input, SelfStats * self_stats);
 
 void free_card(Card card);
 

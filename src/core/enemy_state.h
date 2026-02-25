@@ -6,7 +6,10 @@
 #define ENEMY_ART_FILE_NAME       "art.txt"
 #define ENEMY_MOVE_POOL_FILE_NAME "move_pool.txt"
 
+#define ENEMY_DIR_PREFIX          "Enemy"
+
 typedef struct {
+  char * name;
   char ** art_lines; // pre-grabbing lines leads to less friction with ncurses
   uint8_t qty_art_lines;
 

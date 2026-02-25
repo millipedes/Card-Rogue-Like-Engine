@@ -539,6 +539,16 @@ Hidey Hole: 5)";
   free_card_pool(starting_deck);
 }
 
+TEST(self_stats, self_stats_0) {
+  auto input_stats = R"(Starting Health: 37.5
+Max Health: 90.0)";
+  SelfStats self_stats = {0};
+  auto result_stats = parse_self_stats(input_stats, &self_stats);
+  ASSERT_EQ(result_stats[0], '\0');
+  ASSERT_NEAR(self_stats.max_health, 90.0, eps);
+  ASSERT_NEAR(self_stats.starting_health, 37.5, eps);
+}
+
 TEST(enemy_move_pool, enemy_move_pool_0) {
   auto input_move_pool = R"(Action:      | Deal 2 Base Damage to All Enemies. |
 Cardinality: | 1                   |
@@ -558,7 +568,6 @@ Probability: | 25 %           |)";
 
   MovePool move_pool = {0};
   auto result = parse_enemy_move_pool(input_move_pool, &move_pool);
-  printf("`%s`\n", result);
   ASSERT_EQ(result[0], '\0');
 
   free_move_pool(move_pool);

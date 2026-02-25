@@ -1,6 +1,7 @@
 #include "self_view.h"
 
 #include <string.h>
+#include <sys/param.h>
 
 #include "core/core_utilities.h"
 
@@ -12,9 +13,14 @@ SelfView init_self_view(WINDOW * parent, SelfStateRef self_state_ref) {
   int parent_w = 0;
   getmaxyx(parent, parent_h, parent_w);
 
+  char buf[ART_MAX_WIDTH] = {0};
+  snprintf(buf, ART_MAX_WIDTH, "%.2f / %.2f", self_view.self_state_ref->current_health, self_view.self_state_ref->max_health);
+
   self_view.art_space = derwin(parent,
-      self_state_ref->qty_art_lines + 3,
-      max_art_width(self_state_ref->art_lines, self_state_ref->qty_art_lines) + 4,
+      self_state_ref->qty_art_lines + 4,
+      MAX(
+        max_art_width(self_state_ref->art_lines, self_state_ref->qty_art_lines),
+        MAX(strnlen(buf, ART_MAX_WIDTH), strnlen(self_state_ref->name, ART_MAX_WIDTH))) + 4,
       parent_h * 25 / 100,
       parent_w * 35 / 100
   );
@@ -45,6 +51,14 @@ void draw_self_art(SelfView self_view) {
         1,
         " %s ", self_view.self_state_ref->art_lines[i]);
   }
+  mvwprintw(self_view.art_space,
+      self_view.self_state_ref->qty_art_lines + 1,
+      1,
+      " %s ", self_view.self_state_ref->name);
+  mvwprintw(self_view.art_space,
+      self_view.self_state_ref->qty_art_lines + 2,
+      1,
+      " %.2f / %.2f ", self_view.self_state_ref->current_health, self_view.self_state_ref->max_health);
   box(self_view.art_space, 0, 0);
   wrefresh(self_view.art_space);
 }

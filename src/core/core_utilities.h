@@ -10,7 +10,9 @@
 #define ART_MAX_WIDTH 128
 
 #define NEWLINE_TOK "\n"
+#define CHAR_SPACE  ' '
 
+char * make_entity_name(const char * root_dir, const char * entity_prefix);
 char * make_file_name(const char * root_dir, const char * file_name);
 char * dump_file_contents(const char * file_path);
 void get_art_lines(char *** art_lines, uint8_t * qty_art_lines,

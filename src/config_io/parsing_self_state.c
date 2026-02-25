@@ -219,6 +219,33 @@ const char * parse_self_starting_deck(const char * input,
   return result;
 }
 
+const char * parse_self_stats(const char * input, SelfStats * self_stats) {
+  const char * result = input;
+  const char * tmp_result = NULL;
+  uint8_t stat_bitmap = 0b0;
+  while (stat_bitmap != SELF_REQ_STATS_BIT_NO && result != NULL) {
+    double tmp_numeric = 0.0;
+    if (tmp_result = parse_keywords(parse_ws(result), 3, KW_MAX, KW_HEALTH, KW_COLON)) {
+      if (!(tmp_result = parse_number(parse_ws(tmp_result), &tmp_numeric))) {
+        return NULL;
+      }
+      self_stats->max_health = tmp_numeric;
+      stat_bitmap |= (1U << SELF_MAX_HEALTH_BIT);
+      result = tmp_result;
+    } else if (tmp_result = parse_keywords(parse_ws(result), 3, KW_STARTING, KW_HEALTH, KW_COLON)) {
+      if (!(tmp_result = parse_number(parse_ws(tmp_result), &tmp_numeric))) {
+        return NULL;
+      }
+      self_stats->starting_health = tmp_numeric;
+      stat_bitmap |= (1U << SELF_STARTING_HEALTH_BIT);
+      result = tmp_result;
+    } else {
+      result = NULL;
+    }
+  }
+  return result;
+}
+
 void free_card(Card card) {
   if (card.name) {
     free(card.name);

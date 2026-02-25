@@ -1,10 +1,33 @@
 #include "core_utilities.h"
 
+#include <ctype.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <unistd.h>
+
+char * make_entity_name(const char * root_dir, const char * entity_prefix) {
+  char entity_name_buf[ART_MAX_WIDTH] = {0};
+  char * entity_name_root = strstr(root_dir, entity_prefix);
+  entity_name_root += strnlen(entity_prefix, ART_MAX_WIDTH);
+  uint16_t root_inc = 0;
+  uint16_t buf_inc = 0;
+  while (isalpha(entity_name_root[root_inc])) {
+    if (root_inc != 0 && isupper(entity_name_root[root_inc])) {
+      entity_name_buf[buf_inc] = CHAR_SPACE;
+      buf_inc++;
+    }
+    entity_name_buf[buf_inc] = entity_name_root[root_inc];
+    buf_inc++;
+    root_inc++;
+  }
+  size_t entity_name_buf_len = strnlen(entity_name_buf, ART_MAX_WIDTH);
+  char * entity_name = calloc(entity_name_buf_len + 1, sizeof(char));
+  strncpy(entity_name, entity_name_buf, entity_name_buf_len);
+  return entity_name;
+}
 
 char * make_file_name(const char * root_dir, const char * file_name) {
   size_t root_dir_len = strnlen(root_dir, MAX_PATH_LEN);

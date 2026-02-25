@@ -8,6 +8,9 @@
 #define SELF_ART_FILE_NAME           "art.txt"
 #define SELF_CARD_POOL_FILE_NAME     "card_pool.txt"
 #define SELF_STARTING_DECK_FILE_NAME "starting_deck.txt"
+#define SELF_STATS_FILE_NAME         "stats.txt"
+
+#define SELF_DIR_PREFIX               "Self"
 
 #define MAX_SET_LEN 128
 
@@ -16,6 +19,10 @@
 typedef Card * CardSetRef[MAX_SET_LEN];
 
 typedef struct {
+  char * name;
+  double current_health;
+  double max_health;
+
   char ** art_lines; // pre-grabbing lines leads to less friction with ncurses
   uint8_t qty_art_lines;
   Deck deck;
