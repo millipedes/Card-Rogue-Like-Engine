@@ -43,9 +43,6 @@ BattleView init_battle_view(GameStateRef game_state_ref) {
 
 BattleView update_battle_view(BattleView view, BattleMessage message) {
   switch (message) {
-    case MSG_STANDBY:
-    case MSG_HAND_SELECT_UP:
-    case MSG_HAND_SELECT_DOWN:
     default:
       werase(view.enemy_space);
       box(view.enemy_space, 0, 0);

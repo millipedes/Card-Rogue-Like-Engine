@@ -54,7 +54,11 @@ void draw_enemy_art(EnemyView enemy_view) {
       enemy_view.enemy_state_ref->qty_art_lines + 2,
       1,
       " %.2f ", enemy_view.enemy_state_ref->health);
+  if (enemy_view.highlight.is_highlighted) {
+    wattron(enemy_view.art_space, A_REVERSE);
+  }
   box(enemy_view.art_space, 0, 0);
+  wattroff(enemy_view.art_space, A_REVERSE);
   wrefresh(enemy_view.art_space);
 }
 
@@ -74,7 +78,18 @@ void draw_move_stream(EnemyView enemy_view) {
 
 EnemyView update_enemy_view(EnemyView enemy_view, BattleMessage message) {
   switch (message) {
-    case MSG_STANDBY:
+    case BATTLE_MSG_HAND_SELECT_UP:
+    case BATTLE_MSG_HAND_SELECT_DOWN:
+    case BATTLE_MSG_HAND_UNSELECT_CARD:
+      enemy_view.highlight.is_highlighted = false;
+      draw_enemy_art(enemy_view);
+      draw_move_stream(enemy_view);
+      break;
+    case BATTLE_MSG_HAND_SELECT_CARD:
+      enemy_view.highlight.is_highlighted = true;
+      draw_enemy_art(enemy_view);
+      draw_move_stream(enemy_view);
+      break;
     default:
       draw_enemy_art(enemy_view);
       draw_move_stream(enemy_view);

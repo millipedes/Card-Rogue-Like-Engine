@@ -33,6 +33,7 @@ int main(int argc, char * argv[]) {
   int ch = 0;
   // 60 FPS
   timeout(16);
+  set_escdelay(16);
   while (true) {
     int curr_h;
     int curr_w;
@@ -46,14 +47,20 @@ int main(int argc, char * argv[]) {
 
     switch (ch) {
       case KEY_DOWN:
-        view = update_battle_view(view, MSG_HAND_SELECT_DOWN);
+        view = update_battle_view(view, BATTLE_MSG_HAND_SELECT_DOWN);
         break;
       case KEY_UP:
-        view = update_battle_view(view, MSG_HAND_SELECT_UP);
+        view = update_battle_view(view, BATTLE_MSG_HAND_SELECT_UP);
+        break;
+      case 27:
+        view = update_battle_view(view, BATTLE_MSG_HAND_UNSELECT_CARD);
+        break;
+      case 10: // Enter
+        view = update_battle_view(view, BATTLE_MSG_HAND_SELECT_CARD);
         break;
       case ERR:
       default:
-        view = update_battle_view(view, MSG_STANDBY);
+        view = update_battle_view(view, BATTLE_MSG_STANDBY);
         break;
     }
 

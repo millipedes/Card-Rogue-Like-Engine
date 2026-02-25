@@ -1,6 +1,9 @@
 #ifndef ENEMY_VIEW_H
 #define ENEMY_VIEW_H
 
+#include <stdbool.h>
+#include <stdint.h>
+
 #include <ncurses.h>
 
 #include "core/enemy_state.h"
@@ -11,7 +14,13 @@
 typedef EnemyState * EnemyStateRef;
 
 typedef struct {
+  uint8_t highlight_index;
+  bool is_highlighted;
+} EnemyHighlight;
+
+typedef struct {
   WINDOW * art_space;
+  EnemyHighlight highlight;
 
   WINDOW * move_space;
   MoveStream move_stream;

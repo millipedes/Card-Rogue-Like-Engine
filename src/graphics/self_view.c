@@ -141,17 +141,16 @@ SelfView draw_hand_new_select(SelfView self_view, int dir) {
 
 SelfView update_self_view(SelfView self_view, BattleMessage message) {
   switch (message) {
-    case MSG_HAND_SELECT_DOWN:
+    case BATTLE_MSG_HAND_SELECT_DOWN:
       draw_self_art(self_view);
       self_view = draw_hand_new_select(self_view, 1);
       draw_card_streams(self_view);
       break;
-    case MSG_HAND_SELECT_UP:
+    case BATTLE_MSG_HAND_SELECT_UP:
       draw_self_art(self_view);
       self_view = draw_hand_new_select(self_view, -1);
       draw_card_streams(self_view);
       break;
-    case MSG_STANDBY:
     default:
       draw_self_art(self_view);
       draw_hand(self_view);
