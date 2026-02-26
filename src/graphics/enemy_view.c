@@ -13,14 +13,11 @@ EnemyView init_enemy_view(WINDOW * parent, EnemyStateRef enemy_state_ref) {
   int parent_w = 0;
   getmaxyx(parent, parent_h, parent_w);
 
-  char buf[ART_MAX_WIDTH] = {0};
-  snprintf(buf, ART_MAX_WIDTH, "%.2f", enemy_view.enemy_state_ref->health);
+  enemy_view.art_streams = enemy_state_to_art_streams(*enemy_view.enemy_state_ref);
 
   enemy_view.art_space = derwin(parent,
       enemy_state_ref->qty_art_lines + 4,
-      MAX(
-        max_art_width(enemy_state_ref->art_lines, enemy_state_ref->qty_art_lines),
-        MAX(strnlen(enemy_state_ref->name, ART_MAX_WIDTH), strnlen(buf, ART_MAX_WIDTH))) + 4,
+      enemy_view.art_streams.max_art_width + 4,
       parent_h * 25 / 100,
       parent_w * 50 / 100
   );
@@ -44,16 +41,16 @@ void draw_enemy_art(EnemyView enemy_view) {
     mvwprintw(enemy_view.art_space,
         i + 1,
         1,
-        " %s ", enemy_view.enemy_state_ref->art_lines[i]);
+        "%s", enemy_view.art_streams.art[i]);
   }
   mvwprintw(enemy_view.art_space,
       enemy_view.enemy_state_ref->qty_art_lines + 1,
       1,
-      " %s ", enemy_view.enemy_state_ref->name);
+      "%s", enemy_view.art_streams.name);
   mvwprintw(enemy_view.art_space,
       enemy_view.enemy_state_ref->qty_art_lines + 2,
       1,
-      " %.2f ", enemy_view.enemy_state_ref->health);
+      "%s", enemy_view.art_streams.health);
   if (enemy_view.highlight.is_highlighted) {
     wattron(enemy_view.art_space, A_REVERSE);
   }

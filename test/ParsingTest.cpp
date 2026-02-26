@@ -7,7 +7,7 @@
 #include "config_io/parsing_self_state.h"
 #include "config_io/parsing_enemy_state.h"
 
-#include "config_io/stream_self_card.h"
+#include "config_io/stream_self.h"
 
 constexpr auto eps = 1e-6;
 

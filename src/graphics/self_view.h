@@ -4,13 +4,14 @@
 #include <ncurses.h>
 
 #include "core/self_state.h"
-#include "config_io/stream_self_card.h"
+#include "config_io/stream_self.h"
 #include "messages.h"
 
 typedef SelfState * SelfStateRef;
 
 typedef struct {
   WINDOW * art_space;
+  ArtStreams art_streams;
 
   WINDOW * hand_space;
   uint8_t selected;

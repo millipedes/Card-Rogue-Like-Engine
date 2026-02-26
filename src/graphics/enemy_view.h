@@ -7,7 +7,7 @@
 #include <ncurses.h>
 
 #include "core/enemy_state.h"
-#include "config_io/stream_enemy_move.h"
+#include "config_io/stream_enemy.h"
 
 #include "messages.h"
 
@@ -20,6 +20,7 @@ typedef struct {
 
 typedef struct {
   WINDOW * art_space;
+  ArtStreams art_streams;
   EnemyHighlight highlight;
 
   WINDOW * move_space;

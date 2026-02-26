@@ -4,6 +4,8 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include "core/enemy_state.h"
+
 #include "config_io/parsing_enemy_state.h"
 
 #include "stream_common.h"
@@ -19,6 +21,7 @@ extern "C" {
 #endif
 
 MoveStream move_to_stream(Move move);
+ArtStreams enemy_state_to_art_streams(const EnemyState enemy);
 
 #ifdef __cplusplus
 }

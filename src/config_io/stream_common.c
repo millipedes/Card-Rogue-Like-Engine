@@ -118,3 +118,12 @@ size_t max_action_text_len(char action_texts[][MAX_ACTION_TEXT],
   }
   return max_len;
 }
+
+void center_about_length(char * dst, char * src, int max_length) {
+  size_t src_len = strnlen(src, max_length);
+  size_t qty_spaces = (max_length / 2) - (src_len / 2);
+  for (size_t i = 0; i <= qty_spaces; i++) {
+    dst[i] = CHAR_SPACE;
+  }
+  strncpy(dst + qty_spaces + 1, src, src_len);
+}

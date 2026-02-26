@@ -4,8 +4,9 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include "config_io/parsing_self_state.h"
+#include "core/self_state.h"
 
+#include "parsing_self_state.h"
 #include "stream_common.h"
 
 typedef struct {
@@ -21,7 +22,8 @@ typedef struct {
 extern "C" {
 #endif
 
-CardStreams card_to_stream(Card card);
+CardStreams card_to_stream(const Card card);
+ArtStreams self_state_to_art_streams(const SelfState self);
 
 #ifdef __cplusplus
 }
