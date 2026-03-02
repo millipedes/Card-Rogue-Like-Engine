@@ -63,7 +63,7 @@ GameState read_configuration(const char * root) {
     } else if (entry->d_type == DT_DIR
         && !strncmp(entry->d_name, ENEMY_DIR_PREFIX, LEN_ENEMY_DIR_PREFIX)) {
       cat_sub_dir(root_buf, entry->d_name);
-      add_enemy(&state, init_enemy_state(root_buf));
+      add_enemy(&state.enemy_states, init_enemy_state(root_buf));
       clear_sub_dir(root_buf, root_buf_len);
     }
   }

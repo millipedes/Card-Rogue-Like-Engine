@@ -4,7 +4,9 @@
 #include <ncurses.h>
 
 #include "core/self_state.h"
+
 #include "config_io/stream_self.h"
+
 #include "messages.h"
 
 typedef SelfState * SelfStateRef;

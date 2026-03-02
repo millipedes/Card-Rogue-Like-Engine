@@ -8,11 +8,9 @@
 
 typedef struct {
   SelfState self_state;
-  EnemyState * enemies;
-  uint8_t qty_enemies;
+  EnemyStates enemy_states;
 } GameState;
 
-void add_enemy(GameState * state, EnemyState enemy);
 void free_game_state(GameState state);
 
 #endif

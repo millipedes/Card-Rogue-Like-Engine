@@ -7,11 +7,14 @@
 #include <ncurses.h>
 
 #include "core/enemy_state.h"
+
 #include "config_io/stream_enemy.h"
 
 #include "messages.h"
 
-typedef EnemyState * EnemyStateRef;
+#define MAX_ENEMIES_PER_BATTLE 8
+
+typedef EnemyStates * EnemyStatesRef;
 
 typedef struct {
   uint8_t highlight_index;
@@ -19,17 +22,20 @@ typedef struct {
 } EnemyHighlight;
 
 typedef struct {
-  WINDOW * art_space;
-  ArtStreams art_streams;
+  WINDOW * art_space[MAX_ENEMIES_PER_BATTLE];
+  // Note |art_streams| == |enemy_states|
+  ArtStreams art_streams[MAX_ENEMIES_PER_BATTLE];
+  int max_enemy_art_width;
+  int total_enemy_art_width;
   EnemyHighlight highlight;
 
   WINDOW * move_space;
   MoveStream move_stream;
 
-  EnemyStateRef enemy_state_ref;
+  EnemyStatesRef enemy_states_ref;
 } EnemyView;
 
-EnemyView init_enemy_view(WINDOW * parent, EnemyStateRef enemy_state_ref);
+EnemyView init_enemy_view(WINDOW * parent, EnemyStatesRef enemy_states_ref);
 EnemyView update_enemy_view(EnemyView enemy_view, BattleMessage message);
 void free_enemy_view(EnemyView enemy_view);
 

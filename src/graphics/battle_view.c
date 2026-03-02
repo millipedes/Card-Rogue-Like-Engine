@@ -25,7 +25,7 @@ BattleView init_battle_view(GameStateRef game_state_ref) {
       0
   );
   view.self_view = init_self_view(view.self_space, &game_state_ref->self_state);
-  view.enemy_view = init_enemy_view(view.enemy_space, &game_state_ref->enemies[0]);
+  view.enemy_view = init_enemy_view(view.enemy_space, &game_state_ref->enemy_states);
   box(view.self_space, 0, 0);
 
   view.info_space = newwin(

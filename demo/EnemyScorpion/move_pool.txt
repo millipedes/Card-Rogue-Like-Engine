@@ -1,0 +1,15 @@
+Action:      | Deal 15 Base Damage to All Enemies. |
+Cardinality: | 1                   |
+Probability: | 100 %               |
+
+Action:      | Apply 0.35 Corrode to All Enemies for 1 Turn. |
+Cardinality: | 2                             |
+Probability: | 50 %                          |
+
+Action:      | Deal 20 Base Damage to All Enemies. |
+Cardinality: | 2                   |
+Probability: | 25 %                |
+
+Action:      | Gain 1 Damage. |
+Cardinality: | 3              |
+Probability: | 25 %           |

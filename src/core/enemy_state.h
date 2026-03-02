@@ -19,6 +19,11 @@ typedef struct {
   MovePool move_pool;
 } EnemyState;
 
+typedef struct {
+  EnemyState * enemies;
+  uint8_t qty_enemies;
+} EnemyStates;
+
 // Public API
 #ifdef __cplusplus
 extern "C" {
@@ -26,6 +31,8 @@ extern "C" {
 
 EnemyState init_enemy_state(const char * root_dir);
 void free_enemy_state(EnemyState enemy_state);
+void add_enemy(EnemyStates * states, EnemyState enemy);
+void free_enemy_states(EnemyStates states);
 
 #ifdef __cplusplus
 }

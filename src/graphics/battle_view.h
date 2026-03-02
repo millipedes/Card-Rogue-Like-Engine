@@ -5,8 +5,8 @@
 
 #include "core/game_state.h"
 
-#include "messages.h"
 #include "enemy_view.h"
+#include "messages.h"
 #include "self_view.h"
 
 typedef GameState * GameStateRef;

@@ -45,3 +45,24 @@ void free_enemy_state(EnemyState enemy_state) {
   }
   free_move_pool(enemy_state.move_pool);
 }
+
+void add_enemy(EnemyStates * states, EnemyState enemy) {
+  if (!states->enemies) {
+    states->qty_enemies = 1;
+    states->enemies = calloc(1, sizeof(EnemyState));
+  } else {
+    states->qty_enemies++;
+    states->enemies = realloc(states->enemies,
+        states->qty_enemies * sizeof(EnemyState));
+  }
+  states->enemies[states->qty_enemies - 1] = enemy;
+}
+
+void free_enemy_states(EnemyStates states) {
+  if (states.enemies) {
+    for (uint8_t i = 0; i < states.qty_enemies; i++) {
+      free_enemy_state(states.enemies[i]);
+    }
+    free(states.enemies);
+  }
+}

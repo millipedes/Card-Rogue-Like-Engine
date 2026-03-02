@@ -41,6 +41,7 @@ target_link_libraries(card_rl
   PRIVATE
   CardRLCore
   curses
+  m
 )
 
 option(BUILD_TESTS "Build Test Suite" ON)
